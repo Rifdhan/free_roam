@@ -2,7 +2,8 @@
 // By David Cheung
 // Performs all data parsing for buildings
 
-#include <iostream>
+
+#include <"parser_buildings.h">
 
 
 using namespace std;

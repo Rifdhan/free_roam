@@ -3,8 +3,13 @@
 // Performs all data parsing for buildings
 
 
-#include <iostream>
+#include <"parser_buildings.h">
+
+using namespace std;
 
 
 // Main parsing function
-void parseAllBuildings();
+void parseAllBuildings()
+{
+    
+}
