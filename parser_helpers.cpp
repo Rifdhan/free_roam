@@ -11,7 +11,7 @@ using namespace std;
 
 // Parses the given line and returns a key-value pair
 // By David Cheung
-pair parseKeyValPair(string line)
+pair<string, string> parseKeyValPair(string line)
 {
-    
+    return pair<string, string>("", "");
 }

@@ -1,6 +1,6 @@
 // Primitives
 // By Rifdhan Nazeer
-// Defines several basic data structures and primitives
+// Defines several basic data structures and helper functions
 
 
 #include <cmath>
@@ -8,12 +8,61 @@
 #include "globals.h"
 
 
-// A point in Cartesian coordinates
+// Forward declarations
 struct PointC;
-
-// A point in polar coordinates
 struct PointP;
 
+
+// ==================================================
+// Primitive Types
+// ==================================================
+
+// A point in Cartesian coordinates
+struct PointC
+{
+    double x, y;
+    
+    // Constructor
+    PointC(double newX, double newY);
+    
+    // Equals operator
+    PointC& operator=(const PointC& rhs);
+    
+    // Calculates the magnitude
+    double computeMagnitude();
+    
+    // Calculates the angle in degrees
+    double computeAngleDeg();
+    
+    // Conversion into a polar point object
+    PointP convertToPolar();
+};
+
+// A point in polar coordinates
+struct PointP
+{
+    double radius, angleDeg;
+    
+    // Constructor
+    PointP(double newRadius, double newAngleDeg);
+    
+    // Equals operator
+    PointP& operator=(const PointP& rhs);
+    
+    // Calculates the Cartesian x value
+    double computeX();
+    
+    // Calculates the Cartesian y value
+    double computeY();
+    
+    // Conversion into a Cartesian point object
+    PointC convertToCartesian();
+};
+
+
+// ==================================================
+// Helper Functions
+// ==================================================
 
 // Wrapper for sin taking an angle in degrees
 double sind(double angleDeg);

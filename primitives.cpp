@@ -1,97 +1,97 @@
 // Primitives
 // By Rifdhan Nazeer
-// Defines several basic data structures and primitives
+// Defines several basic data structures and functions
 
 
 #include "primitives.h"
 
 
+// ==================================================
+// Primitive Types
+// ==================================================
+
 // A point in Cartesian coordinates
-struct PointC
+
+// Constructor
+PointC::PointC(double newX, double newY)
 {
-    double x, y;
+    x = newX;
+    y = newY;
+}
+
+// Equals operator
+PointC& PointC::operator=(const PointC& rhs)
+{
+    x = rhs.x;
+    y = rhs.y;
     
-    // Constructor
-    PointC(double newX, double newY)
-    {
-        x = newX;
-        y = newY;
-    }
+    return *this;
+}
+
+// Calculates the magnitude
+double PointC::computeMagnitude()
+{
+    return sqrt(x * x + y * y);
+}
+
+// Calculates the angle in degrees
+double PointC::computeAngleDeg()
+{
+    return (atan2(y, x) * RAD_TO_DEG);
+}
+
+// Conversion into a polar point object
+PointP PointC::convertToPolar()
+{
+    double radius = computeMagnitude();
+    double angleDeg = computeAngleDeg();
     
-    // Equals operator
-    PointC& operator=(const PointC& rhs)
-    {
-        x = rhs.x;
-        y = rhs.y;
-        
-        return *this;
-    }
-    
-    // Calculates the magnitude
-    double computeMagnitude()
-    {
-        return sqrt(x * x + y * y);
-    }
-    
-    // Calculates the angle in degrees
-    double computeAngleDeg()
-    {
-        return (atan2(y, x) * RAD_TO_DEG);
-    }
-    
-    // Conversion into a polar point object
-    PointP convertToPolar()
-    {
-        double radius = computeMagnitude();
-        double angleDeg = computeAngleDeg();
-        
-        return PointP(radius, angleDeg);
-    }
+    return PointP(radius, angleDeg);
 }
 
 // A point in polar coordinates
-struct PointP
+
+// Constructor
+PointP::PointP(double newRadius, double newAngleDeg)
 {
-    double radius, angleDeg;
-    
-    // Constructor
-    PointP(double newRadius, double newAngleDeg)
-    {
-        radius = newRadius;
-        angleDeg = newAngleDeg;
-    }
-    
-    // Equals operator
-    PointP& operator=(const PointP& rhs)
-    {
-        radius = rhs.radius;
-        angleDeg = rhs.angleDeg;
-        
-        return *this;
-    }
-    
-    // Calculates the Cartesian x value
-    double computeX()
-    {
-        return (radius * cosd(angleDeg));
-    }
-    
-    // Calculates the Cartesian y value
-    double computeY()
-    {
-        return (radius * sind(angleDeg));
-    }
-    
-    // Conversion into a Cartesian point object
-    PointC convertToCartesian()
-    {
-        double x = computeX();
-        double y = computeY();
-        
-        return PointC(x, y);
-    }
+    radius = newRadius;
+    angleDeg = newAngleDeg;
 }
 
+// Equals operator
+PointP& PointP::operator=(const PointP& rhs)
+{
+    radius = rhs.radius;
+    angleDeg = rhs.angleDeg;
+    
+    return *this;
+}
+
+// Calculates the Cartesian x value
+double PointP::computeX()
+{
+    return (radius * cosd(angleDeg));
+}
+
+// Calculates the Cartesian y value
+double PointP::computeY()
+{
+    return (radius * sind(angleDeg));
+}
+
+// Conversion into a Cartesian point object
+PointC PointP::convertToCartesian()
+{
+    double x = computeX();
+    double y = computeY();
+    
+    return PointC(x, y);
+}
+
+
+// ==================================================
+// Helper Functions
+// ==================================================
 
 // Wrapper for sin taking an angle in degrees
 double sind(double angleDeg)

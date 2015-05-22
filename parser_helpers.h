@@ -5,9 +5,9 @@
 
 #include <iostream>
 #include <string>
-#include <pair>
+#include <utility>
 
 
 // Parses the given line and returns a key-value pair
 // By David Cheung
-pair parseKeyValPair(string line);
+std::pair<std::string, std::string> parseKeyValPair(std::string line);
