@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall
+CFLAGS=-c -g -O0 -Wall
 LDFLAGS=
 SOURCES=$(patsubst %.cpp, %.o, $(wildcard *.cpp))
 OBJECTS=$(SOURCES:.cpp=.o)
@@ -12,6 +12,9 @@ $(EXECUTABLE): $(OBJECTS)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
+
+run: all
+	./$(EXE)
 
 clean:
 	rm $(OBJECTS)
