@@ -4,3 +4,7 @@
 
 
 #include "globals.h"
+
+
+// Global general variables
+bool errorOccurred = false;
