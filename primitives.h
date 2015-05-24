@@ -4,7 +4,8 @@
 
 
 #include <cmath>
-
+#include <string>
+#include <iostream>
 #include "globals.h"
 
 

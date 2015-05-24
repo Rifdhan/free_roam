@@ -19,14 +19,49 @@ int main(int argc, char **argv)
     // Do nothing for now
     
     // Testing parseKeyValPair
-    pair<string, string> myPair = parseKeyValPair("<myKey=myValue");
+    
+    // Invalid
+    pair<string, string> myPair = parseKeyValPair("<myKey=myValue>");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    myPair = parseKeyValPair("<anotherKey=\"stringValue\"");
+    // Valid
+    myPair = parseKeyValPair("<     anotherKey  =    \"string <> Value\" >");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    myPair = parseKeyValPair("<123=456>");
+    // Invalid
+    myPair = parseKeyValPair("<123=\" HI\"\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
+    // Invalid
+    myPair = parseKeyValPair("<<Snail=\" Bob\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<Snail= \" Bob\" 8>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<Snail= \" Bob\">>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Valid
+    myPair = parseKeyValPair("<Snail=\" Bob\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<Sna$il=\" B_ob\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<Sna$il=>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<=\"\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("<HI \"There\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     return 0;
 }
