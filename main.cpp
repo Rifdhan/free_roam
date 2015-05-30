@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     
     // Invalid
     myPair = parseKeyValPair("<Sna$il=\" B_ob\">");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl << endl;
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
     // Invalid
     myPair = parseKeyValPair("<Sna$il=>");
@@ -63,5 +63,18 @@ int main(int argc, char **argv)
     // Invalid
     myPair = parseKeyValPair("<HI \"There\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Valid
+    myPair = parseKeyValPair("   \t < key=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair(" ' \t < key=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseKeyValPair("  \t < key=\"Value\">\t> \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
     return 0;
 }

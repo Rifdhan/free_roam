@@ -14,7 +14,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run: all
-	./$(EXE)
+	./free_roam
 
 clean:
 	rm $(OBJECTS)

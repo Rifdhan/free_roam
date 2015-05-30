@@ -14,32 +14,43 @@ using namespace std;
 pair<string, string> parseKeyValPair(string line)
 {
     string::const_iterator keyBegin = line.begin();                 // Iterator to the first char of the key
-    string::const_iterator keyEnd = line.end() - 1;                 // Iterator to the last char of the key
+    string::const_iterator keyEnd;                                  // Iterator to the last char of the key
     string::const_iterator valueBegin;                              // Iterator to the first char of the value
     string::const_iterator valueEnd;                                // Iterator to the last char of the value
     string::const_iterator toEnd;                                   // Iterator to the last char of the string
-    string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator '='
-    int quotation = 0;                                              // The number of quotations " that were found
-    
+    string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator (=)
+    unsigned nQuotations = 0;                                       // The number of quotations (") that were found
     
     // Check if the string is enclosed in "< >"
-    if (separator == keyEnd)    // Determine if the separator '=' exists within the string
+    if(separator == line.end()) // Determine if the separator '=' exists within the string
     {
-        error("There is no seperator");
-        return pair<string, string>("","");
+        error("No separator (=) found in key-value pair \"" + line + "\"");
+        return pair<string, string>("", "");
     }
-    else if (*keyBegin != '<' || *keyEnd != '>')    // Determine if the string is enclosed in <>
+    else if(separator == line.begin() || separator == line.end() - 1) // Determine if there is room for a key and value between the separator
     {
-        error("Input not enclosed in < >");
-        return pair<string, string>("","");
+        error("No key or value found in key-value pair \"" + line + "\"");
+        return pair<string, string>("", "");
     }
-    else if (separator == keyBegin + 1 || separator == keyEnd - 1)  // Determine if there is room for a key and value between the separator
+    
+    // Find the first angle bracket '<'
+    while(true)
     {
-        error("There is no key or value");
-        return pair<string, string>("","");
+        if(*keyBegin == ' ' || *keyBegin == '\t') // Check for whitespace
+        {
+            keyBegin++;
+        }
+        else if(*keyBegin == '<') // Angle bracket found
+        {
+            keyBegin++;
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character before key-value pair \"" + line + "\"");
+            return pair<string, string>("", "");
+        }
     }
-      
-    keyBegin++; // Advance past the initial '<'
     
     // Find first letter of key
     while(true)
@@ -54,8 +65,8 @@ pair<string, string> parseKeyValPair(string line)
         }
         else // Invalid character found
         {
-            error("Invalid character was entered before the key");
-            return pair<string, string>("","");
+            error("Invalid character before key in key-value pair \"" + line + "\"");
+            return pair<string, string>("", "");
         }
     }   
     
@@ -72,10 +83,10 @@ pair<string, string> parseKeyValPair(string line)
         {
             keyEnd++;
         } 
-        else // Invalid character found.
+        else // Invalid character found
         {
-            error("Invalid character was entered in the key");
-            return pair<string, string>("","");    
+            error("Invalid character in the key in key-value pair \"" + line + "\"");
+            return pair<string, string>("", "");    
         }
     }
         
@@ -90,14 +101,14 @@ pair<string, string> parseKeyValPair(string line)
         }
         else if(*valueBegin == '"') // Check for quotes (means value is a string)
         {
-            quotation++;
+            nQuotations++;
             valueBegin++;
             break;
         }
         else // Initial quotation for string not found 
         {
-            error("String not enclosed in \"\"");
-            return pair<string, string>("",""); 
+            error("String value not enclosed in quotes (\") in key-value pair \"" + line + "\"");
+            return pair<string, string>("", ""); 
         }
     }
     
@@ -108,8 +119,7 @@ pair<string, string> parseKeyValPair(string line)
     {
         if(*valueEnd == '"') // Check for end of string
         {
-            quotation++;
-            valueEnd++;
+            nQuotations++;
             break;
         }
         else // Characters of the value
@@ -118,28 +128,46 @@ pair<string, string> parseKeyValPair(string line)
         }
     }
     
-    toEnd = valueEnd;
+    toEnd = valueEnd + 1;
     
-    // Check if there are invalid characters after the value until the closing bracket.
-    while(toEnd != line.end() - 1)
+    // Check for invalid characters after value
+    while(toEnd != line.end())
     {
-        // Invalid character found
-        if(*toEnd != ' ' && *toEnd != '\t')
-        {
-            error("Invalid character entered after the value");
-            return pair<string, string>("","");
-        }
-        else // Valid character
+        if(*toEnd == ' ' || *toEnd == '\t') // Whitespace
         {
             toEnd++;
+        }
+        else if(*toEnd == '>')
+        {
+            toEnd++;
+            break;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after value in key-value pair \"" + line + "\"");
+            return pair<string, string>("", "");
+        }
+    }
+    
+    // Check for invalid characters after key-value pair
+    while(toEnd != line.end())
+    {
+        if(*toEnd == ' ' || *toEnd == '\t') // Whitespace
+        {
+            toEnd++;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after key-value pair \"" + line + "\"");
+            return pair<string, string>("", "");
         }
     }
     
     // Check if the string is enclosed in two quotations ""
-    if(quotation != 2)
+    if(nQuotations != 2)
     {    
-        error("String not enclosed in \"\" properly");
-        return pair<string, string>("","");
+        error("String value contains too few or too many quotations (\") in key-value pair \"" + line + "\"");
+        return pair<string, string>("", "");
     }
        
     // Construct and return the key-value pair
