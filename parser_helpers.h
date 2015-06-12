@@ -6,8 +6,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
-#include <algorithm>
-
+#include <algorithm>  
 #include "primitives.h"
 
 
