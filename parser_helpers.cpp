@@ -9,6 +9,30 @@
 using namespace std;
 
 
+// Parses the given line and determines if it is whitespace
+// By David Cheung
+bool isWhitespace(string line)
+{
+    // Whitespace includes ' ', '\t', '\n', '\r', or blank lines
+    return false;
+}
+
+// Parses the given line and determines if it is a header of type <header>
+// By David Cheung
+bool isHeader(string line, string header)
+{
+    // Should be of form ..<..header..>..
+    return false;
+}
+
+// Parses the given line and determines if it is a footer of type </footer>
+// By David Cheung
+bool isFooter(string line, string footer)
+{
+    // Should be of form ..<../..footer..>..
+    return false;
+}
+
 // Parses the given line and returns a key-value pair
 // By David Cheung
 pair<string, string> parseStringKeyValPair(string line)
