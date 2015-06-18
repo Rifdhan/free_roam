@@ -1,0 +1,8 @@
+// Car (types: car_poor, car_average, car_luxury, car_super)
+<vehicle>
+    <type="car_average">
+    <name="Car Name">
+    <width=0.0>  // Meters
+    <height=0.0> // Meters
+    <mass=0.0>   // Kilograms
+</vehicle>
