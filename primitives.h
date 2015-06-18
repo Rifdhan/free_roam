@@ -24,7 +24,7 @@ struct PointC
     double x, y;
     
     // Constructor
-    PointC(double newX, double newY);
+    PointC(double newX = 0.0, double newY = 0.0);
     
     // Equals operator
     PointC& operator=(const PointC& rhs);
@@ -45,7 +45,7 @@ struct PointP
     double radius, angleDeg;
     
     // Constructor
-    PointP(double newRadius, double newAngleDeg);
+    PointP(double newRadius = 0.0, double newAngleDeg = 0.0);
     
     // Equals operator
     PointP& operator=(const PointP& rhs);

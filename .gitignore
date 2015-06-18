@@ -1,0 +1,7 @@
+*.h~
+*.cpp~
+*.xml~
+Makefile~
+.gitignore~
+*.o
+free_roam
