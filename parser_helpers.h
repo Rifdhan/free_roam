@@ -10,6 +10,18 @@
 #include "primitives.h"
 
 
+// Parses the given line and determines if it is whitespace
+// By David Cheung
+bool isWhitespace(std::string line);
+
+// Parses the given line and determines if it is a header of type <header>
+// By David Cheung
+bool isHeader(std::string line, std::string header);
+
+// Parses the given line and determines if it is a footer of type </footer>
+// By David Cheung
+bool isFooter(std::string line, std::string footer);
+
 // Parses the given line and returns a key-value pair of type <key, string>
 // By David Cheung
 std::pair<std::string, std::string> parseStringKeyValPair(std::string line);

@@ -11,11 +11,11 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 run: all
 	./free_roam
 
 clean:
-	rm $(OBJECTS)
-	rm $(EXE)
+	rm -f $(OBJECTS)
+	rm -f $(EXECUTABLE)
