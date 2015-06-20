@@ -20,6 +20,7 @@ pair<string, string> parseStringKeyValPair(string line)
     string::const_iterator toEnd;                                   // Iterator to the last char of the string
     string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator (=)
     unsigned nQuotations = 0;                                       // The number of quotations (") that were found
+    bool closed = false;                                            // Bool to determine if the pair is closed in '<>'
     
     // Check if the string is enclosed in "< >"
     if(separator == line.end()) // Determine if the separator '=' exists within the string
@@ -139,6 +140,7 @@ pair<string, string> parseStringKeyValPair(string line)
         }
         else if(*toEnd == '>')
         {
+            closed = true;
             toEnd++;
             break;
         }
@@ -163,6 +165,12 @@ pair<string, string> parseStringKeyValPair(string line)
         }
     }
     
+    // Key-value pair closed with '>'
+    if(closed != true){
+		error("No closing '>' brackets in the key-value pair \"" + line + "\"");
+		return pair<string, string>("", "");
+	} 
+	        
     // Check if the string is enclosed in two quotations ""
     if(nQuotations != 2)
     {    
@@ -202,7 +210,8 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
     string::const_iterator toEnd;                                   // Iterator to the last char of the string
     string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator (=)
 	unsigned eCount = 0;											// Counter for the number of 'e' for exponents
-    bool flag = 0;
+    bool flag = 0;                                                  // Bool to determine if a decimal is present                        
+    bool closed = false;                                            // Bool to determine if the pair is closed in '<>'
     
     if(separator == line.end()) // Determine if the separator '=' exists within the string
     {
@@ -345,6 +354,7 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
         }
         else if(*toEnd == '>')
         {
+            closed = true;
             toEnd++;
             break;
         }
@@ -369,6 +379,12 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
         }
     }
     
+    // Key-value pair closed with '>'
+    if(closed != true){
+		error("No closing '>' brackets in the key-value pair \"" + line + "\"");
+		return pair<string, int>("", 0);
+	} 
+	    
     double numericValue = stod(string(valueBegin - 1, valueEnd)); // String value converted to a double
     
        // Check if the value is an integer
@@ -414,6 +430,7 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
 	unsigned eCount = 0;											// Counter for the number of exponents 'e'
 	unsigned dCount = 0;                                            // Counter for the number of decimals '.'
     bool flag = false;                                              // Flag to indicate whether an exponent 'e' was already parsed in the value.
+    bool closed = false;                                            // Bool to determine if the pair is closed in '<>'
     
     if(separator == line.end()) // Determine if the separator '=' exists within the string
     {
@@ -561,6 +578,7 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
         }
         else if(*toEnd == '>')
         {
+            closed = true;
             toEnd++;
             break;
         }
@@ -584,6 +602,13 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
             return pair<string, double>("", 0.0);
         }
     }
+    
+    // Key-value pair closed with '>'
+    if(closed != true){
+		error("No closing '>' brackets in the key-value pair \"" + line + "\"");
+		return pair<string, double>("", 0.0);
+	}  
+	  
     
     // Construct and return the key-value pair
     return pair<string, double>(string(keyBegin, keyEnd), stod(string(valueBegin - 1, valueEnd))); 
@@ -611,6 +636,7 @@ std::pair<std::string, bool> parseBoolKeyValPair(std::string line)
     string::const_iterator toEnd;                                   // Iterator to the last char of the string
     string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator (=)
     bool result = false;                                            // Resulting boolean for the value
+    bool closed = false;                                            // Bool to determine if the pair is closed in '<>'
     
     if(separator == line.end()) // Determine if the separator '=' exists within the string
     {
@@ -693,7 +719,7 @@ std::pair<std::string, bool> parseBoolKeyValPair(std::string line)
         {
             string tempStr = string(valueBegin, valueBegin + 5); // Temporary string for true/false range
 
-            if (toupper(*valueBegin) == 'T') // Value is true
+            if(toupper(*valueBegin) == 'T') // Value is true
             {
                 result = true;
             }
@@ -709,8 +735,8 @@ std::pair<std::string, bool> parseBoolKeyValPair(std::string line)
                 valueBegin += 3; // End of value
                 
             } 
-            else if (tempStr.substr(0, 5) == "FALSE" || tempStr.substr(0, 5) == "False" 
-                    || tempStr.substr(0, 5) == "false") // Different variation of false;
+            else if(tempStr.substr(0, 5) == "FALSE" || tempStr.substr(0, 5) == "False" 
+                    || tempStr.substr(0, 5) == "false") // Different variation of false
             {
                 valueBegin += 4; // End of value
                               
@@ -737,6 +763,7 @@ std::pair<std::string, bool> parseBoolKeyValPair(std::string line)
         }
         else if(*toEnd == '>') // Closing bracket
         {
+            closed = true;
             toEnd++;
             break;
         }
@@ -760,7 +787,13 @@ std::pair<std::string, bool> parseBoolKeyValPair(std::string line)
             return pair<string, bool>("", false);
         }
     }
-       
+ 
+    // Key-value pair closed with '>'
+    if(closed != true){
+		error("No closing '>' brackets in the key-value pair \"" + line + "\"");
+		return pair<string, bool>("", false);
+	}  
+	    
     // Construct and return the key-value pair
     return pair<string, bool>(string(keyBegin, keyEnd), result);   
 }
