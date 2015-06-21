@@ -216,10 +216,71 @@ int main(int argc, char **argv)
     myPair = parseBoolKeyValPair("   \t < key = true >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    // InValid
+    // Invalid
     myPair = parseBoolKeyValPair("   \t < key = truee >\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    //Invalid
+    myPair = parseBoolKeyValPair("   \t < key = true \t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     }
        
+       
+    // Header, Footer and White Space
+    // Test Cases
+    cout << "------------------------Parsing Header/Footer------------------------" << endl;
+    {
+    // Valid
+    bool result = isWhitespace("   \t    \n   \r    \t   \t \t ");
+    cout << "Status: " << result << endl;  
+    
+    // Valid
+    result = isHeader("< car >", "car");
+    cout << "Status: " << result << endl;  
+    
+    // Valid
+    result = isFooter("< / car >", "car");
+    cout << "Status: " << result << endl;
+    // Valid
+    result = isFooter("< / car >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Valid
+    result = isFooter("</ car >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Valid
+    result = isFooter("< /car    >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isFooter("< / cars >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isFooter("< / car >", "cars");
+    cout << "Status: " << result << endl;   
+    
+    // Invalid
+    result = isHeader("<  car >", "bob");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isHeader("< ca r >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isFooter("< / car ", "car");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isHeader(" car >", "car");
+    cout << "Status: " << result << endl;
+    
+    // Invalid
+    result = isWhitespace("  s \t    \n   \r    \t   \t \t ");
+    cout << "Status: " << result << endl; 
+    }   
+    
     return 0;
 }
