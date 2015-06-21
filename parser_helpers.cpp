@@ -399,6 +399,206 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
        }   
 }
 
+// Parses the given line and returns a key-value pair of type <key, int>
+// By David Cheung
+std::pair<std::string, unsigned int> parseUnsignedKeyValPair(std::string line)
+{   
+    string::const_iterator keyBegin = line.begin();                 // Iterator to the first char of the key
+    string::const_iterator keyEnd;                                  // Iterator to the last char of the key
+    string::const_iterator valueBegin;                              // Iterator to the first char of the value
+    string::const_iterator valueEnd;                                // Iterator to the last char of the value
+    string::const_iterator toEnd;                                   // Iterator to the last char of the string
+    string::const_iterator separator = find(keyBegin, keyEnd, '='); // Iterator to the location of the separator (=)
+	unsigned eCount = 0;											// Counter for the number of 'e' for exponents
+    bool flag = 0;                                                  // Bool to determine if a decimal is present                        
+    bool closed = false;                                            // Bool to determine if the pair is closed in '<>'
+    
+    if(separator == line.end()) // Determine if the separator '=' exists within the string
+    {
+        error("No separator (=) found in key-value pair \"" + line + "\"");
+        return pair<string, unsigned int>("", 0);
+    }
+    else if(separator == line.begin() || separator == line.end() - 1) // Determine if there is room for a key and value between the separator
+    {
+        error("No key or value found in key-value pair \"" + line + "\"");
+        return pair<string, unsigned int>("", 0);
+    }
+    
+    // Find the first angle bracket '<'
+    while(true)
+    {
+        if(*keyBegin == ' ' || *keyBegin == '\t') // Check for whitespace
+        {
+            keyBegin++;
+        }
+        else if(*keyBegin == '<') // Angle bracket found
+        {
+            keyBegin++;
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character before key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);
+        }
+    }
+    
+    // Find first letter of key
+    while(true)
+    {        
+        if(*keyBegin == ' ' || *keyBegin == '\t') // Check for whitespace
+        {
+            keyBegin++;
+        }
+        else if(isalnum(*keyBegin)) // Key found
+        {
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character before key in key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);
+        }
+    }   
+    
+    keyEnd = keyBegin;
+    
+    // Find last letter of key
+    while(true)
+    {
+        if(*keyEnd == ' ' || *keyEnd == '\t' || *keyEnd == '=') // Check for whitespace or '='
+        {
+            break;
+        }
+        else if(isalnum(*keyEnd)) // Characters of the key
+        {
+            keyEnd++;
+        } 
+        else // Invalid character found
+        {
+            error("Invalid character in the key in key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);    
+        }
+    }
+        
+    valueBegin = keyEnd;  
+    
+    // Find first digit of value
+    while(true)
+    {
+        if(*valueBegin == '=' || *valueBegin == ' ' || *valueBegin == '\t') // Check for whitespace or separator
+        {
+            valueBegin++;
+        }
+        else if(isdigit(*valueBegin) || *valueBegin == '+') // Check for numbers
+        {
+            valueBegin++;
+            break;
+        }
+        else // Invalid digit found 
+        {
+            error("The initial value is not a valid number for key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0); 
+        }
+    }
+    
+    valueEnd = valueBegin;
+    
+    // Find last digit of value
+    while(valueEnd != line.end())
+    {
+        if(isdigit(*valueEnd) || (*valueEnd == 'e' && eCount == 0) || flag == true) // Digits of the value
+        {
+            
+			
+			if(eCount == 1 && flag == true)
+			{
+			    if(isdigit(*valueEnd) || *valueEnd == '-' || *valueEnd == '+') // Valid character after exponent
+			    {
+			        flag = false;
+			    } 
+			    else 
+			    {
+			        break;
+			    }
+			}
+			
+			if(*valueEnd == 'e') // Check for exponent
+            {
+			    eCount = 1;
+			    flag = true;			    
+			}
+			 
+			valueEnd++;
+        }
+        else // End of value
+        {
+            break;
+        }
+    }
+    
+    if(*(valueEnd - 1) == 'e' || *(valueEnd - 1) == '+') // Check for number entered as last character
+    {
+        error("Invalid character entered after the exponent in key-value pair \"" + line + "\"");
+        return pair<string, unsigned int>("", 0);  
+    }
+    
+    toEnd = valueEnd;
+    
+    // Check for invalid characters after value
+    while(toEnd != line.end())
+    {
+        if(*toEnd == ' ' || *toEnd == '\t') // Whitespace
+        {
+            toEnd++;
+        }
+        else if(*toEnd == '>')
+        {
+            closed = true;
+            toEnd++;
+            break;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after value in key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);
+        }
+    }
+    
+    // Check for invalid characters after key-value pair
+    while(toEnd != line.end())
+    {
+        if(*toEnd == ' ' || *toEnd == '\t') // Whitespace
+        {
+            toEnd++;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);
+        }
+    }
+    
+    // Key-value pair closed with '>'
+    if(closed != true){
+		error("No closing '>' bracket in the key-value pair \"" + line + "\"");
+		return pair<string, unsigned int>("", 0);
+	} 
+	    
+    double numericValue = stod(string(valueBegin - 1, valueEnd)); // String value converted to a double
+    
+       // Check if the value is an integer
+       if(fmod(numericValue,1.0) == 0.0){
+            // Construct and return the key-value pair
+            return pair<string, unsigned int>(string(keyBegin, keyEnd), (int)numericValue); 
+       } 
+       else // Not an integer 
+       {
+            error("Value is not an integer in key-value pair \"" + line + "\"");
+            return pair<string, unsigned int>("", 0);
+       }   
+}
+
 // Parses the given line and returns a key-value pair of type <key, double>
 // By David Cheung
 std::pair<std::string, double> parseDoubleKeyValPair(std::string line)

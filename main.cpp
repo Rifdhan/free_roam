@@ -24,15 +24,25 @@ int main(int argc, char **argv)
     // Test Cases 
     
     cout << "------------------------Parsing Strings------------------------" << endl;
-    {
-    // Invalid
-    pair<string, string> myPair = parseStringKeyValPair("<myKey=myValue>");
+    { 
+    // Valid
+    pair<string, string>  myPair = parseStringKeyValPair("<     anotherKey  =    \"string <> Value\" >");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
     // Valid
-    myPair = parseStringKeyValPair("<     anotherKey  =    \"string <> Value\" >");
+    myPair = parseStringKeyValPair("<Snail=\" Bob\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
+    // Valid
+    myPair = parseStringKeyValPair("   \t < key=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    cout << "--------------------------------------------------------------------------" << endl;
+    
+    // Invalid
+    myPair = parseStringKeyValPair("<myKey=myValue>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+        
     // Invalid
     myPair = parseStringKeyValPair("<123=\" HI\"\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
@@ -48,19 +58,7 @@ int main(int argc, char **argv)
     // Invalid
     myPair = parseStringKeyValPair("<Snail= \" Bob\">>");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
-    // Valid
-    myPair = parseStringKeyValPair("<Snail=\" Bob\">");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
-    // Invalid
-    myPair = parseStringKeyValPair("<Sna$il=\" B_ob\">");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
-    // Invalid
-    myPair = parseStringKeyValPair("<Sna$il=>");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
+        
     // Invalid
     myPair = parseStringKeyValPair("<=\"\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
@@ -69,16 +67,20 @@ int main(int argc, char **argv)
     myPair = parseStringKeyValPair("<HI \"There\">");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    // Valid
-    myPair = parseStringKeyValPair("   \t < key=\"Value\">\t \t ");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
     // Invalid
     myPair = parseStringKeyValPair(" ' \t < key=\"Value\">\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
     // Invalid
     myPair = parseStringKeyValPair("  \t < key=\"Value\">\t> \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseStringKeyValPair("<Sna$il=\" B_ob\">");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid
+    myPair = parseStringKeyValPair("<Sna$il=>");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     }   
 
@@ -97,14 +99,6 @@ int main(int argc, char **argv)
      pair<string, int> myPair = parseIntKeyValPair("  \t < key= 1337> \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    // Invalid
-    myPair = parseIntKeyValPair("  \t < key= 13v37> \t ");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
-    // Invalid 
-    myPair = parseIntKeyValPair("   \t < key=\"Value\">\t \t ");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
     // Valid
     myPair = parseIntKeyValPair("   \t < key= +999>\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
@@ -113,20 +107,29 @@ int main(int argc, char **argv)
     myPair = parseIntKeyValPair("   \t < key= -999 >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl; 
     
-     // Invalid
-    myPair = parseIntKeyValPair("   \t < key= -99+9>\t \t ");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;   
-    
     // Valid
     myPair = parseIntKeyValPair("   \t < key= 10e2 >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
-    // Invalid  
-    myPair = parseIntKeyValPair("   \t < key= 10ee2 >\t \t ");
-    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
-    
     // Valid
     myPair = parseIntKeyValPair("   \t < key= 10e-1 >\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+        
+     // Invalid
+    myPair = parseIntKeyValPair("   \t < key= -99+9>\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;   
+        
+    // Invalid
+    myPair = parseIntKeyValPair("  \t < key= 13v37> \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid 
+    myPair = parseIntKeyValPair("   \t < key=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Invalid  
+    myPair = parseIntKeyValPair("   \t < key= 10ee2 >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
     // Invalid
@@ -280,7 +283,24 @@ int main(int argc, char **argv)
     // Invalid
     result = isWhitespace("  s \t    \n   \r    \t   \t \t ");
     cout << "Status: " << result << endl; 
-    }   
+    }
     
+ 
+    // Header, Footer and White Space
+    // Test Cases
+    cout << "------------------------Parsing Unsigned------------------------" << endl;
+    {
+    // Valid
+    pair<string, unsigned> myPair = parseUnsignedKeyValPair("<test= 123 >");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl; 
+    
+    // Invalid
+    myPair = parseUnsignedKeyValPair("<test = -123>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;        
+    
+    // Invalid
+    myPair = parseUnsignedKeyValPair("<test = 1.23>");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    }
     return 0;
 }

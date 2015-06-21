@@ -30,6 +30,10 @@ std::pair<std::string, std::string> parseStringKeyValPair(std::string line);
 // By David Cheung
 std::pair<std::string, int> parseIntKeyValPair(std::string line);
 
+// Parses the given line and returns a key-value pair of type <key, unsigned int>
+// By David Cheung
+std::pair<std::string, unsigned int> parseUnsignedKeyValPair(std::string line);
+
 // Parses the given line and returns a key-value pair of type <key, double>
 // By David Cheung
 std::pair<std::string, double> parseDoubleKeyValPair(std::string line);
