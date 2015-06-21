@@ -9,6 +9,243 @@
 using namespace std;
 
 
+
+// Parses the given line and determines if it is white space 
+// By David Cheung
+bool isWhitespace(string line)
+{
+	// Determines if the line is all white space
+	for (string::const_iterator str = line.begin(); str < line.end(); ++str)
+	{
+		// Character is white space
+		if (*str != '\t' && *str != ' ' && *str != '\n' && *str != '\r')
+		{
+		    error("Non-white space character found in \"" + line + "\"");
+			return false;
+		}
+	}
+	// Entire line is white space
+	return true;
+}
+
+// Parses the given line and determines if it is a header of type <header> 
+// By David Cheung
+bool isHeader(string line, string header)
+{
+    string::const_iterator headBegin = line.begin();                // Iterator to the first char of the header type
+    string::const_iterator headEnd;                                 // Iterator to the last char of the header
+	unsigned headLen = header.size();								// Length of header type
+    bool closed = false;											// Boolean to determine that the header is closed in '<>'
+	
+    // Find the first angle bracket '<'
+    while(true)
+    {
+        if(*headBegin == ' ' || *headBegin == '\t') // Check for whitespace
+        {
+            headBegin++;
+        }
+        else if(*headBegin == '<') // Angle bracket found
+        {
+            headBegin++;
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character before the header \"" + line + "\" with type \"" + header + "\"");
+            return false;
+        }
+    }
+    
+    // Find first letter of header type
+    while(true)
+    {        
+        if(*headBegin == ' ' || *headBegin == '\t') // Check for whitespace
+        {
+            headBegin++;
+        }
+        else if(isalpha(*headBegin) || *headBegin == '_') // header type found
+        {
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character entered before the header \"" + line + "\" with type \"" + header + "\"");
+            return false;
+        }
+    }   
+    
+	string tempStr = string(headBegin, headBegin + headLen); // Temporary string to determine if the header matches
+	
+	// Determine if the string is a matching header type
+	if (tempStr.substr(0, headLen) != header){
+		error("Invalid type entered in the header \"" + line + "\" with type \"" + header + "\"");
+		return false;
+	}
+	
+    headEnd = headBegin + headLen;
+    
+    // Check for invalid characters after header type
+    while(headEnd != line.end())
+    {
+        if(*headEnd == ' ' || *headEnd == '\t') // Whitespace
+        {
+            headEnd++;
+        }
+        else if(*headEnd == '>')	// Closing bracket
+        {
+			closed = true;
+            headEnd++;
+            break;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after the header \"" + line + "\" with type \"" + header + "\"");
+            return false;
+        }
+    }
+    
+    // Check for invalid characters after header
+    while(headEnd != line.end())
+    {
+        if(*headEnd == ' ' || *headEnd == '\t') // Whitespace
+        {
+            headEnd++;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after header \"" + line + "\" with type \"" + header + "\"");
+            return false;
+        }
+    }
+    
+	if(closed != true){
+		error("No closing '>' brackets in the header \"" + line + "\" with type \"" + header + "\"");
+		return false;
+	}
+    // Matching header
+    return true;  
+}
+
+// Parses the given line and determines if it is a footer of type </footer> 
+// By David Cheung
+bool isFooter(string line, string footer)
+{
+    string::const_iterator footerBegin = line.begin();              // Iterator to the first char of the footer type
+    string::const_iterator footerEnd;                               // Iterator to the last char of the footer
+	unsigned footerLen = footer.size();								// Length of footer type
+	bool closed = false;                                            // Boolean to determine if the footer is closed in '<>'     
+	
+    // Find the first angle bracket '<'
+    while(true)
+    {
+        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
+        {
+            footerBegin++;
+        }
+        else if(*footerBegin == '<') // Angle bracket found
+        {
+            footerBegin++;
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character before the footer \"" + line + "\" with type \"" + footer + "\"");
+            return false;
+        }
+    }
+    
+    // Find closing forward slash 
+    while(true)
+    {
+        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
+        {
+            footerBegin++;
+        }
+        else if(*footerBegin == '/') // footer closing slash found
+        {
+            footerBegin++;
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character entered before the footer \"" + line + "\" with type \"" + footer + "\"");
+            return false;
+        }    
+    }
+    
+    // Find first letter of footer type
+    while(true)
+    {        
+        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
+        {
+            footerBegin++;
+        }
+        else if(isalpha(*footerBegin) || *footerBegin == '_') // footer type found
+        {
+            break;
+        }
+        else // Invalid character found
+        {
+            error("Invalid character entered before the footer \"" + line + "\" with type \"" + footer + "\"");
+            return false;
+        }
+    }   
+    
+	string tempStr = string(footerBegin, footerBegin + footerLen); // Temporary string to determine if the footer matches
+	
+	// Determine if the string is a matching footerer type
+	if (tempStr.substr(0, footerLen) != footer){
+		error("Invalid type entered in the footer \"" + line + "\" with type \"" + footer + "\"");
+		return false;
+	}
+	
+    footerEnd = footerBegin + footerLen;
+    
+    // Check for invalid characters after footer type
+    while(footerEnd != line.end())
+    {
+        if(*footerEnd == ' ' || *footerEnd == '\t') // Whitespace
+        {
+            footerEnd++;
+        }
+        else if(*footerEnd == '>')	// Closing forward slash
+        {
+            closed = true;
+            footerEnd++;
+            break;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after the footer \"" + line + "\" with type \"" + footer + "\"");
+            return false;
+        }
+    }
+    
+	// Closing bracket
+	if(closed != true)
+	{
+		error("No closing '>' brackets for footer \"" + line + "\" with type \"" + footer + "\"");
+		return false;
+	}
+	
+    // Check for invalid characters after footer
+    while(footerEnd != line.end())
+    {
+        if(*footerEnd == ' ' || *footerEnd == '\t') // Whitespace
+        {
+            footerEnd++;
+        }
+        else // Invalid character
+        {
+            error("Invalid character after footer \"" + line + "\" with type \"" + footer + "\"");
+            return false;
+        }
+    }
+    
+    // Line is footer
+    return true;
+}
+
 // Parses the given line and returns a key-value pair
 // By David Cheung
 pair<string, string> parseStringKeyValPair(string line)
@@ -387,21 +624,21 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
 	    
     double numericValue = stod(string(valueBegin - 1, valueEnd)); // String value converted to a double
     
-       // Check if the value is an integer
-       if(fmod(numericValue,1.0) == 0.0){
-            // Construct and return the key-value pair
-            return pair<string, int>(string(keyBegin, keyEnd), (int)numericValue); 
-       } 
-       else // Not an integer 
-       {
-            error("Value is not an integer in key-value pair \"" + line + "\"");
-            return pair<string, int>("", 0);
-       }   
+    // Check if the value is an integer
+    if(fmod(numericValue,1.0) == 0.0){
+        // Construct and return the key-value pair
+        return pair<string, int>(string(keyBegin, keyEnd), (int)numericValue); 
+    } 
+    else // Not an integer
+    {
+        error("Value is not an integer in key-value pair \"" + line + "\"");
+        return pair<string, int>("", 0);
+    }
 }
 
-// Parses the given line and returns a key-value pair of type <key, int>
+// Parses the given line and returns a key-value pair of type <key, unsigned>
 // By David Cheung
-std::pair<std::string, unsigned int> parseUnsignedKeyValPair(std::string line)
+std::pair<std::string, unsigned> parseUnsignedKeyValPair(std::string line)
 {   
     string::const_iterator keyBegin = line.begin();                 // Iterator to the first char of the key
     string::const_iterator keyEnd;                                  // Iterator to the last char of the key
@@ -587,16 +824,16 @@ std::pair<std::string, unsigned int> parseUnsignedKeyValPair(std::string line)
 	    
     double numericValue = stod(string(valueBegin - 1, valueEnd)); // String value converted to a double
     
-       // Check if the value is an integer
-       if(fmod(numericValue,1.0) == 0.0){
-            // Construct and return the key-value pair
-            return pair<string, unsigned int>(string(keyBegin, keyEnd), (int)numericValue); 
-       } 
-       else // Not an integer 
-       {
-            error("Value is not an integer in key-value pair \"" + line + "\"");
-            return pair<string, unsigned int>("", 0);
-       }   
+    // Check if the value is an integer
+    if(fmod(numericValue,1.0) == 0.0){
+        // Construct and return the key-value pair
+        return pair<string, unsigned int>(string(keyBegin, keyEnd), (int)numericValue); 
+    } 
+    else // Not an integer 
+    {
+        error("Value is not an integer in key-value pair \"" + line + "\"");
+        return pair<string, unsigned int>("", 0);
+    }   
 }
 
 // Parses the given line and returns a key-value pair of type <key, double>
@@ -997,242 +1234,3 @@ pair<string, bool> parseBoolKeyValPair(string line)
     // Construct and return the key-value pair
     return pair<string, bool>(string(keyBegin, keyEnd), result);   
 }
-
-
-// Parses the given line and determines if it is white space 
-// By David Cheung
-bool isWhitespace(string line)
-{
-	// Determines if the line is all white space
-	for (string::const_iterator str = line.begin(); str < line.end(); ++str)
-	{
-		// Character is white space
-		if (*str != '\t' && *str != ' ' && *str != '\n' && *str != '\r')
-		{
-		    error("Non-white space character found in \"" + line + "\"");
-			return false;
-		}
-	}
-	// Entire line is white space
-	return true;
-}
-
-
-// Parses the given line and determines if it is a header of type <header> 
-// By David Cheung
-bool isHeader(string line, string header)
-{
-    string::const_iterator headBegin = line.begin();                // Iterator to the first char of the header type
-    string::const_iterator headEnd;                                 // Iterator to the last char of the header
-	unsigned headLen = header.size();								// Length of header type
-    bool closed = false;											// Boolean to determine that the header is closed in '<>'
-	
-    // Find the first angle bracket '<'
-    while(true)
-    {
-        if(*headBegin == ' ' || *headBegin == '\t') // Check for whitespace
-        {
-            headBegin++;
-        }
-        else if(*headBegin == '<') // Angle bracket found
-        {
-            headBegin++;
-            break;
-        }
-        else // Invalid character found
-        {
-            error("Invalid character before the header \"" + line + "\" with type \"" + header + "\"");
-            return false;
-        }
-    }
-    
-    // Find first letter of header type
-    while(true)
-    {        
-        if(*headBegin == ' ' || *headBegin == '\t') // Check for whitespace
-        {
-            headBegin++;
-        }
-        else if(isalpha(*headBegin) || *headBegin == '_') // header type found
-        {
-            break;
-        }
-        else // Invalid character found
-        {
-            error("Invalid character entered before the header \"" + line + "\" with type \"" + header + "\"");
-            return false;
-        }
-    }   
-    
-	string tempStr = string(headBegin, headBegin + headLen); // Temporary string to determine if the header matches
-	
-	// Determine if the string is a matching header type
-	if (tempStr.substr(0, headLen) != header){
-		error("Invalid type entered in the header \"" + line + "\" with type \"" + header + "\"");
-		return false;
-	}
-	
-    headEnd = headBegin + headLen;
-    
-    // Check for invalid characters after header type
-    while(headEnd != line.end())
-    {
-        if(*headEnd == ' ' || *headEnd == '\t') // Whitespace
-        {
-            headEnd++;
-        }
-        else if(*headEnd == '>')	// Closing bracket
-        {
-			closed = true;
-            headEnd++;
-            break;
-        }
-        else // Invalid character
-        {
-            error("Invalid character after the header \"" + line + "\" with type \"" + header + "\"");
-            return false;
-        }
-    }
-    
-    // Check for invalid characters after header
-    while(headEnd != line.end())
-    {
-        if(*headEnd == ' ' || *headEnd == '\t') // Whitespace
-        {
-            headEnd++;
-        }
-        else // Invalid character
-        {
-            error("Invalid character after header \"" + line + "\" with type \"" + header + "\"");
-            return false;
-        }
-    }
-    
-	if(closed != true){
-		error("No closing '>' brackets in the header \"" + line + "\" with type \"" + header + "\"");
-		return false;
-	}
-    // Matching header
-    return true;  
-}
-
-// Parses the given line and determines if it is a footer of type </footer> 
-// By David Cheung
-bool isFooter(string line, string footer)
-{
-    string::const_iterator footerBegin = line.begin();              // Iterator to the first char of the footer type
-    string::const_iterator footerEnd;                               // Iterator to the last char of the footer
-	unsigned footerLen = footer.size();								// Length of footer type
-	bool closed = false;                                            // Boolean to determine if the footer is closed in '<>'     
-	
-    // Find the first angle bracket '<'
-    while(true)
-    {
-        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
-        {
-            footerBegin++;
-        }
-        else if(*footerBegin == '<') // Angle bracket found
-        {
-            footerBegin++;
-            break;
-        }
-        else // Invalid character found
-        {
-            error("Invalid character before the footer \"" + line + "\" with type \"" + footer + "\"");
-            return false;
-        }
-    }
-    
-    // Find closing forward slash 
-    while(true)
-    {
-        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
-        {
-            footerBegin++;
-        }
-        else if(*footerBegin == '/') // footer closing slash found
-        {
-            footerBegin++;
-            break;
-        }
-        else // Invalid character found
-        {
-            error("Invalid character entered before the footer \"" + line + "\" with type \"" + footer + "\"");
-            return false;
-        }    
-    }
-    
-    // Find first letter of footer type
-    while(true)
-    {        
-        if(*footerBegin == ' ' || *footerBegin == '\t') // Check for whitespace
-        {
-            footerBegin++;
-        }
-        else if(isalpha(*footerBegin) || *footerBegin == '_') // footer type found
-        {
-            break;
-        }
-        else // Invalid character found
-        {
-            error("Invalid character entered before the footer \"" + line + "\" with type \"" + footer + "\"");
-            return false;
-        }
-    }   
-    
-	string tempStr = string(footerBegin, footerBegin + footerLen); // Temporary string to determine if the footer matches
-	
-	// Determine if the string is a matching footerer type
-	if (tempStr.substr(0, footerLen) != footer){
-		error("Invalid type entered in the footer \"" + line + "\" with type \"" + footer + "\"");
-		return false;
-	}
-	
-    footerEnd = footerBegin + footerLen;
-    
-    // Check for invalid characters after footer type
-    while(footerEnd != line.end())
-    {
-        if(*footerEnd == ' ' || *footerEnd == '\t') // Whitespace
-        {
-            footerEnd++;
-        }
-        else if(*footerEnd == '>')	// Closing forward slash
-        {
-            closed = true;
-            footerEnd++;
-            break;
-        }
-        else // Invalid character
-        {
-            error("Invalid character after the footer \"" + line + "\" with type \"" + footer + "\"");
-            return false;
-        }
-    }
-    
-	// Closing bracket
-	if(closed != true)
-	{
-		error("No closing '>' brackets for footer \"" + line + "\" with type \"" + footer + "\"");
-		return false;
-	}
-	
-    // Check for invalid characters after footer
-    while(footerEnd != line.end())
-    {
-        if(*footerEnd == ' ' || *footerEnd == '\t') // Whitespace
-        {
-            footerEnd++;
-        }
-        else // Invalid character
-        {
-            error("Invalid character after footer \"" + line + "\" with type \"" + footer + "\"");
-            return false;
-        }
-    }
-       
-// line is footer
-return true;
-}
-

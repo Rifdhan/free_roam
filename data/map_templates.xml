@@ -1,0 +1,11 @@
+<intersection>
+    <id=0>
+    <position_x=0.0> // Meters
+    <position_y=0.0> // Meters
+</intersection>
+
+<road>
+    <id=0>
+    <start_intersection=0>
+    <end_intersection=0>
+</road>

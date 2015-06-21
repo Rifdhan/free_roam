@@ -3,10 +3,18 @@
 // Defines several basic data structures and helper functions
 
 
+#ifndef PRIMITIVES_H
+#define PRIMITIVES_H
+
+
 #include <cmath>
 #include <string>
 #include <iostream>
 #include "globals.h"
+
+
+// Constants
+#define INVALID_ID (unsigned) (-1)
 
 
 // Forward declarations
@@ -73,3 +81,6 @@ double cosd(double angleDeg);
 
 // Registers an error in the system, and prints an error message to logs
 void error(std::string message);
+
+
+#endif // PRIMITIVES_H

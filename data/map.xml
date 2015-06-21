@@ -1,0 +1,48 @@
+<intersection>
+    <id=0>
+    <position_x=0.0>
+    <position_y=0.0>
+</intersection>
+
+<intersection>
+    <id=1>
+    <position_x=100.0>
+    <position_y=0.0>
+</intersection>
+
+<intersection>
+    <id=2>
+    <position_x=100.0>
+    <position_y=100.0>
+</intersection>
+
+<intersection>
+    <id=3>
+    <position_x=0.0>
+    <position_y=100.0>
+</intersection>
+
+
+<road>
+    <id=0>
+    <start_intersection=0>
+    <end_intersection=1>
+</road>
+
+<road>
+    <id=1>
+    <start_intersection=1>
+    <end_intersection=2>
+</road>
+
+<road>
+    <id=2>
+    <start_intersection=2>
+    <end_intersection=3>
+</road>
+
+<road>
+    <id=3>
+    <start_intersection=3>
+    <end_intersection=0>
+</road>

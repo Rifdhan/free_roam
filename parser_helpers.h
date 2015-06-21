@@ -12,15 +12,15 @@
 
 // Parses the given line and determines if it is whitespace
 // By David Cheung
-bool isWhitespace(std::string);
+bool isWhitespace(std::string line);
 
 // Parses the given line and determines if it is a header of type <header>
 // By David Cheung
-bool isHeader(std::string, std::string);
+bool isHeader(std::string line, std::string header);
 
 // Parses the given line and determines if it is a footer of type </footer>
 // By David Cheung
-bool isFooter(std::string, std::string);
+bool isFooter(std::string line, std::string footer);
 
 // Parses the given line and returns a key-value pair of type <key, string>
 // By David Cheung
@@ -30,9 +30,9 @@ std::pair<std::string, std::string> parseStringKeyValPair(std::string line);
 // By David Cheung
 std::pair<std::string, int> parseIntKeyValPair(std::string line);
 
-// Parses the given line and returns a key-value pair of type <key, unsigned int>
+// Parses the given line and returns a key-value pair of type <key, unsigned>
 // By David Cheung
-std::pair<std::string, unsigned int> parseUnsignedKeyValPair(std::string line);
+std::pair<std::string, unsigned> parseUnsignedKeyValPair(std::string line);
 
 // Parses the given line and returns a key-value pair of type <key, double>
 // By David Cheung
