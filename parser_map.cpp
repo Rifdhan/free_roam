@@ -65,8 +65,30 @@ void parseIntersection(ifstream& mapFile)
 }
 
 // Parses a single street segment
-// By Rifdhan Nazeer
+// By David Cheung
 void parseStreetSegment(ifstream& mapFile)
 {
+    // Parse the data about this street segment
+    string line;
     
+    getline(mapFile, line);
+    pair<string, unsigned> id = parseUnsignedKeyValPair(line);
+    
+    getline(mapFile, line);
+    pair<string, unsigned> startIntersection = parseUnsignedKeyValPair(line);
+    
+    getline(mapFile, line);
+    pair<string, unsigned> endIntersection = parseUnsignedKeyValPair(line);
+    
+    // Create a new StreetSegment object
+    StreetSegment newStreetSegment(id.second);
+    
+    // Set starting intersection ID
+    newStreetSegment.setStartIntersectionId(startIntersection.second);
+    
+    // Set ending intersection ID
+    newStreetSegment.setEndIntersectionId(endIntersection.second);
+    
+    // Add it to the list of street segments
+    streetSegments[id.second] = newStreetSegment;
 }
