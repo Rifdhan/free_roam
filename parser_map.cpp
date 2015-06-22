@@ -36,8 +36,7 @@ void parseMapData()
         }
         else
         {
-            // TODO: improve log
-            //Log.warning("Unrecognized entry in map file: '" + line + "'");
+            Log::warning("Unrecognized entry in map file: '" + line + "'");
         }
     }
 }

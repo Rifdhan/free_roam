@@ -7,7 +7,8 @@
 #include <string>
 #include <utility>
 #include <algorithm>  
-#include "primitives.h"
+
+#include "Log.h"
 
 
 // Parses the given line and determines if it is whitespace

@@ -79,8 +79,5 @@ double sind(double angleDeg);
 // Wrapper for cos taking an angle in degrees
 double cosd(double angleDeg);
 
-// Registers an error in the system, and prints an error message to logs
-void error(std::string message);
-
 
 #endif // PRIMITIVES_H

@@ -107,13 +107,3 @@ double cosd(double angleDeg)
 {
     return cos(angleDeg * DEG_TO_RAD);
 }
-
-// Registers an error in the system, and prints an error message to logs
-void error(string message)
-{
-    // Register an error
-    errorOccurred = true;
-    
-    // Print message to terminal
-    cout << "Error: " << message << endl;
-}
