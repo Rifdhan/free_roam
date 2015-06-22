@@ -22,6 +22,7 @@ protected:
     
 public:
     // Constructors/destructors
+    StreetSegment();
     StreetSegment(const unsigned& newId);
     ~StreetSegment();
     

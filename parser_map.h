@@ -16,6 +16,7 @@
 #include "primitives.h"
 #include "parser_helpers.h"
 #include "Intersection.h"
+#include "StreetSegment.h"
 
 
 // Parses all map data

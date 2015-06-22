@@ -11,14 +11,19 @@ using namespace std;
 
 // Constructors/destructors
 
+StreetSegment::StreetSegment()
+{
+    id = INVALID_ID;
+}
+   
 StreetSegment::StreetSegment(const unsigned& newId)
 {
     id = newId;
 }
-
+ 
 StreetSegment::~StreetSegment()
 {
-    // Nothing to do
+    // Do nothing
 }
 
 // Intersection connections
