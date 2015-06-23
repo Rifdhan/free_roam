@@ -12,6 +12,7 @@
 #include <string>
 #include <utility>
 #include <unordered_map>
+#include <GL/glut.h>
 
 #include "parser_map.h"
 #include "Intersection.h"
@@ -26,9 +27,16 @@ extern std::unordered_map<unsigned, StreetSegment> streetSegments;
 // By Rifdhan Nazeer
 int main(int argc, char **argv);
 
+// Initializes the graphics and output window
+// By Rifdhan Nazeer
+void initializeGraphics(int argc, char **argv);
+
 // Main parsing function
 // By Rifdhan Nazeer
 void parseAllData();
 
+// Main screen update function (OpenGL callback)
+// By Rifdhan Nazeer
+void drawScreen();
 
 #endif // MAIN_H
