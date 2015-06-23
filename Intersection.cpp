@@ -46,6 +46,11 @@ unsigned Intersection::getId()
     return id;
 }
 
+PointC Intersection::getPosition()
+{
+    return position;
+}
+
 // Add a street connection
 
 void Intersection::setRightStreetSegmentId(const unsigned& newRightStreetSegmentId)

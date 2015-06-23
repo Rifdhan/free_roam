@@ -77,6 +77,6 @@ void handleFilling(const bool& filled)
     }
     else
     {
-        glPolygonMode(GL_FRONT_AND_BACK,GL_LINES);
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
     }
 }

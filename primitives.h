@@ -70,16 +70,16 @@ struct PointP
     PointC convertToCartesian();
 };
 
-// A colour in RGB
+// A colour in RGB (all values between 0.0 and 1.0)
 struct ColourRgb
 {
-    char red, green, blue;
+    double red, green, blue;
     
     // Constructor
-    ColourRgb(const char& newRed = 0.0, const char& newGreen = 0.0, const char& newBlue = 0.0);
+    ColourRgb(const double& newRed = 0.0, const double& newGreen = 0.0, const double& newBlue = 0.0);
     
     // Finds the average brightness
-    char getBrightness();
+    double getBrightness();
 };
 
 

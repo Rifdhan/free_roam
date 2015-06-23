@@ -33,6 +33,7 @@ public:
     
     // General
     unsigned getId();
+    PointC getPosition();
     
     // Street connections
     void setRightStreetSegmentId(const unsigned& newRightStreetSegmentId);

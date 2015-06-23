@@ -91,10 +91,10 @@ PointC PointP::convertToCartesian()
     return PointC(x, y);
 }
 
-// A colour in RGB
+// A colour in RGB (all values between 0.0 and 1.0)
 
 // Constructor
-ColourRgb::ColourRgb(const char& newRed, const char& newGreen, const char& newBlue)
+ColourRgb::ColourRgb(const double& newRed, const double& newGreen, const double& newBlue)
 {
     red = newRed;
     green = newGreen;
@@ -102,9 +102,9 @@ ColourRgb::ColourRgb(const char& newRed, const char& newGreen, const char& newBl
 }
 
 // Finds the average brightness
-char ColourRgb::getBrightness()
+double ColourRgb::getBrightness()
 {
-    return ((double) (red + green + blue)) / 3.0;
+    return ((red + green + blue) / 3.0);
 }
 
 
