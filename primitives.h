@@ -9,11 +9,13 @@
 
 #include <cmath>
 #include <string>
-#include <iostream>
-#include "globals.h"
 
 
-// Constants
+// Unit conversion constants
+#define DEG_TO_RAD 57.295779513082320876798154814105170332405472466564321 // Factor to convert degrees to radians
+#define RAD_TO_DEG 0.0174532925199432957692369076848861271344287188854172 // Factor to convert radians to degrees
+
+// Other constants
 #define INVALID_ID (unsigned) (-1)
 
 
@@ -32,7 +34,7 @@ struct PointC
     double x, y;
     
     // Constructor
-    PointC(double newX = 0.0, double newY = 0.0);
+    PointC(const double& newX = 0.0, const double& newY = 0.0);
     
     // Equals operator
     PointC& operator=(const PointC& rhs);
@@ -53,7 +55,7 @@ struct PointP
     double radius, angleDeg;
     
     // Constructor
-    PointP(double newRadius = 0.0, double newAngleDeg = 0.0);
+    PointP(const double& newRadius = 0.0, const double& newAngleDeg = 0.0);
     
     // Equals operator
     PointP& operator=(const PointP& rhs);
@@ -68,16 +70,28 @@ struct PointP
     PointC convertToCartesian();
 };
 
+// A colour in RGB
+struct ColourRgb
+{
+    char red, green, blue;
+    
+    // Constructor
+    ColourRgb(const char& newRed = 0.0, const char& newGreen = 0.0, const char& newBlue = 0.0);
+    
+    // Finds the average brightness
+    char getBrightness();
+};
+
 
 // ==================================================
 // Helper Functions
 // ==================================================
 
 // Wrapper for sin taking an angle in degrees
-double sind(double angleDeg);
+double sind(const double& angleDeg);
 
 // Wrapper for cos taking an angle in degrees
-double cosd(double angleDeg);
+double cosd(const double& angleDeg);
 
 
 #endif // PRIMITIVES_H

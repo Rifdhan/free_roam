@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -g -O0 -Wall -std=c++11
-LDFLAGS=
+LDFLAGS=-lGL -lglut
 SOURCES=$(patsubst %.cpp, %.o, $(wildcard *.cpp))
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=free_roam
@@ -8,7 +8,7 @@ EXECUTABLE=free_roam
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@

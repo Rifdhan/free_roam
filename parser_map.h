@@ -12,8 +12,8 @@
 #include <fstream>
 #include <utility>
 
-#include "main.h"
 #include "primitives.h"
+#include "main.h"
 #include "parser_helpers.h"
 #include "Intersection.h"
 #include "StreetSegment.h"

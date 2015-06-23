@@ -16,7 +16,7 @@ using namespace std;
 // A point in Cartesian coordinates
 
 // Constructor
-PointC::PointC(double newX, double newY)
+PointC::PointC(const double& newX, const double& newY)
 {
     x = newX;
     y = newY;
@@ -55,7 +55,7 @@ PointP PointC::convertToPolar()
 // A point in polar coordinates
 
 // Constructor
-PointP::PointP(double newRadius, double newAngleDeg)
+PointP::PointP(const double& newRadius, const double& newAngleDeg)
 {
     radius = newRadius;
     angleDeg = newAngleDeg;
@@ -91,19 +91,35 @@ PointC PointP::convertToCartesian()
     return PointC(x, y);
 }
 
+// A colour in RGB
+
+// Constructor
+ColourRgb::ColourRgb(const char& newRed, const char& newGreen, const char& newBlue)
+{
+    red = newRed;
+    green = newGreen;
+    blue = newBlue;
+}
+
+// Finds the average brightness
+char ColourRgb::getBrightness()
+{
+    return ((double) (red + green + blue)) / 3.0;
+}
+
 
 // ==================================================
 // Helper Functions
 // ==================================================
 
 // Wrapper for sin taking an angle in degrees
-double sind(double angleDeg)
+double sind(const double& angleDeg)
 {
     return sin(angleDeg * DEG_TO_RAD);
 }
 
 // Wrapper for cos taking an angle in degrees
-double cosd(double angleDeg)
+double cosd(const double& angleDeg)
 {
     return cos(angleDeg * DEG_TO_RAD);
 }
