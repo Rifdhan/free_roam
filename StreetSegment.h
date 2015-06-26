@@ -12,13 +12,15 @@
 
 class StreetSegment
 {
-protected:
+private:
     // General
     unsigned id;
     
     // Connected intersections
     unsigned startIntersectionId;
+    PointC startIntersectionPosition;
     unsigned endIntersectionId;
+    PointC endIntersectionPosition;
     
 public:
     // Constructors/destructors
@@ -27,10 +29,15 @@ public:
     ~StreetSegment();
     
     // Intersection connections
-    void setStartIntersectionId(const unsigned& newStartIntersectionId);
-    void setEndIntersectionId(const unsigned& newEndIntersectionId);
+    void setStartIntersectionId(const unsigned& newStartIntersectionId, const PointC& newStartIntersectionPosition);
+    void setEndIntersectionId(const unsigned& newEndIntersectionId, const PointC& newEndIntersectionPosition);
     unsigned getStartIntersectionId();
+    PointC getStartIntersectionPosition();
     unsigned getEndIntersectionId();
+    PointC getEndIntersectionPosition();
+    
+    // Drawing
+    void draw();
 };
 
 

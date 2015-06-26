@@ -12,7 +12,7 @@
 
 class Intersection
 {
-protected:
+private:
     // General
     unsigned id;
     PointC position;

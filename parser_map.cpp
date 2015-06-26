@@ -14,7 +14,7 @@ using namespace std;
 void parseMapData()
 {
     // Open the map file
-    ifstream mapFile("/data/map.xml");
+    ifstream mapFile("./data/map.xml", ifstream::in);
     
     // Stores the current line
     string line;
@@ -83,11 +83,11 @@ void parseStreetSegment(ifstream& mapFile)
     // Create a new StreetSegment object
     StreetSegment newStreetSegment(id.second);
     
-    // Set starting intersection ID
-    newStreetSegment.setStartIntersectionId(startIntersection.second);
+    // Set starting intersection ID and position
+    newStreetSegment.setStartIntersectionId(startIntersection.second, intersections.at(startIntersection.second).getPosition());
     
-    // Set ending intersection ID
-    newStreetSegment.setEndIntersectionId(endIntersection.second);
+    // Set ending intersection ID and position
+    newStreetSegment.setEndIntersectionId(endIntersection.second, intersections.at(endIntersection.second).getPosition());
     
     // Add it to the list of street segments
     streetSegments[id.second] = newStreetSegment;

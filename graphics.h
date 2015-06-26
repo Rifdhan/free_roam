@@ -12,6 +12,10 @@
 #include "primitives.h"
 
 
+// Global scaling factor
+extern double scale;
+
+
 // World drawing functions
 
 // Draws a rectangle using corners

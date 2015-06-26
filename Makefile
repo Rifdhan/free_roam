@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -g -O0 -Wall -std=c++11
-LDFLAGS=-lGL -lglut
+LDFLAGS=-lGL -lglut -std=c++11
 SOURCES=$(patsubst %.cpp, %.o, $(wildcard *.cpp))
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=free_roam

@@ -17,7 +17,7 @@ void drawMap()
     for(auto iter = intersections.begin(); iter != intersections.end(); iter++)
     {
         // Draw the current intersection
-        worldDrawCircle(iter->second.getPosition(), 10.0, true, ColourRgb(0.5, 0.5, 0.5));
+        worldDrawCircle(iter->second.getPosition(), 100.0, true, ColourRgb(0.5, 0.5, 0.5));
     }
     
     // Iterate through all street segments

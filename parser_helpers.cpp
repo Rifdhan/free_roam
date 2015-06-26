@@ -13,16 +13,16 @@ using namespace std;
 // By David Cheung
 bool isWhitespace(string line)
 {
-	// Determines if the line is all white space
-	for(string::const_iterator str = line.begin(); str < line.end(); ++str)
+	// Parse each character in the line
+	for(auto iter = line.begin(); iter != line.end(); iter++)
 	{
-		// Character is white space
-		if (*str != '\t' && *str != ' ' && *str != '\n' && *str != '\r')
+		// Character is not white space
+		if (*iter != '\t' && *iter != ' ' && *iter != '\n' && *iter != '\r')
 		{
-		    Log::error("Non-white space character found in \"" + line + "\"");
 			return false;
 		}
 	}
+	
 	// Entire line is white space
 	return true;
 }
@@ -858,8 +858,6 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
     // 1.4e 2
     // 1.4 e 2
     // 11.4f
-    
-    
     
     string::const_iterator keyBegin = line.begin();                 // Iterator to the first char of the key
     string::const_iterator keyEnd;                                  // Iterator to the last char of the key

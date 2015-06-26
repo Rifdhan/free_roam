@@ -9,6 +9,10 @@
 using namespace std;
 
 
+// Global scaling factor
+double scale = 0.005;
+
+
 // World drawing functions
 
 // Draws a rectangle using corners
@@ -23,10 +27,10 @@ void worldDrawRectCorners(const PointC& bottomLeft, const PointC& topRight, cons
         glColor3f(colour.red, colour.green, colour.blue);
         
         // Draw four vertices
-        glVertex2f(bottomLeft.x, bottomLeft.y);
-        glVertex2f(  topRight.x, bottomLeft.y);
-        glVertex2f(  topRight.x,   topRight.y);
-        glVertex2f(bottomLeft.x,   topRight.y);
+        glVertex2f(bottomLeft.x * scale, bottomLeft.y * scale);
+        glVertex2f(  topRight.x * scale, bottomLeft.y * scale);
+        glVertex2f(  topRight.x * scale,   topRight.y * scale);
+        glVertex2f(bottomLeft.x * scale,   topRight.y * scale);
     glEnd();
 }
 
@@ -42,10 +46,10 @@ void worldDrawRectCentered(const PointC& center, const PointC& widthHeight, cons
         glColor3f(colour.red, colour.green, colour.blue);
         
         // Draw four vertices
-        glVertex2f(center.x - widthHeight.x / 2.0, center.y - widthHeight.y / 2.0);
-        glVertex2f(center.x + widthHeight.x / 2.0, center.y - widthHeight.y / 2.0);
-        glVertex2f(center.x + widthHeight.x / 2.0, center.y + widthHeight.y / 2.0);
-        glVertex2f(center.x - widthHeight.x / 2.0, center.y + widthHeight.y / 2.0);
+        glVertex2f(scale * (center.x - widthHeight.x) / 2.0, scale * (center.y - widthHeight.y) / 2.0);
+        glVertex2f(scale * (center.x + widthHeight.x) / 2.0, scale * (center.y - widthHeight.y) / 2.0);
+        glVertex2f(scale * (center.x + widthHeight.x) / 2.0, scale * (center.y + widthHeight.y) / 2.0);
+        glVertex2f(scale * (center.x - widthHeight.x) / 2.0, scale * (center.y + widthHeight.y) / 2.0);
     glEnd();
 }
 
@@ -56,10 +60,10 @@ void worldDrawCircle(const PointC& center, const double& radius, const bool& fil
     handleFilling(filled);
     
     // Generate the circle
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_LINE_STRIP);
         for(unsigned degrees = 0; degrees < 360; degrees++)
         {
-            glVertex2f(cos(DEG_TO_RAD * degrees) * radius, sin(DEG_TO_RAD * degrees) * radius);
+            glVertex2f((center.x + cos(DEG_TO_RAD * degrees) * radius) * scale, (center.y + sin(DEG_TO_RAD * degrees) * radius) * scale);
         }
     glEnd();
 }
