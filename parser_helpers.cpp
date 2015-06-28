@@ -297,7 +297,7 @@ pair<string, string> parseStringKeyValPair(string line)
         {
             keyBegin++;
         }
-        else if(isalnum(*keyBegin)) // Key found
+        else if(isalnum(*keyBegin) || *keyBegin == '_') // Key found
         {
             break;
         }
@@ -317,7 +317,7 @@ pair<string, string> parseStringKeyValPair(string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd)) // Characters of the key
+        else if(isalnum(*keyEnd) || *keyEnd == '_') // Characters of the key
         {
             keyEnd++;
         } 
@@ -488,7 +488,7 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
         {
             keyBegin++;
         }
-        else if(isalnum(*keyBegin)) // Key found
+        else if(isalnum(*keyBegin) || *keyBegin == '_') // Key found
         {
             break;
         }
@@ -508,7 +508,7 @@ std::pair<std::string, int> parseIntKeyValPair(std::string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd)) // Characters of the key
+        else if(isalnum(*keyEnd) || *keyEnd == '_') // Characters of the key
         {
             keyEnd++;
         } 
@@ -689,7 +689,7 @@ std::pair<std::string, unsigned> parseUnsignedKeyValPair(std::string line)
         {
             keyBegin++;
         }
-        else if(isalnum(*keyBegin)) // Key found
+        else if(isalnum(*keyBegin) || *keyBegin == '_') // Key found
         {
             break;
         }
@@ -709,7 +709,7 @@ std::pair<std::string, unsigned> parseUnsignedKeyValPair(std::string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd)) // Characters of the key
+        else if(isalnum(*keyEnd) || *keyBegin == '_') // Characters of the key
         {
             keyEnd++;
         } 
@@ -907,7 +907,7 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
         {
             keyBegin++;
         }
-        else if(isalnum(*keyBegin)) // Key found
+        else if(isalnum(*keyBegin) || *keyBegin == '_') // Key found
         {
             break;
         }
@@ -927,7 +927,7 @@ std::pair<std::string, double> parseDoubleKeyValPair(std::string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd)) // Characters of the key
+        else if(isalnum(*keyEnd) || *keyEnd == '_') // Characters of the key
         {
             keyEnd++;
         } 
@@ -1112,7 +1112,7 @@ pair<string, bool> parseBoolKeyValPair(string line)
         {
             keyBegin++;
         }
-        else if(isalnum(*keyBegin)) // Key found
+        else if(isalnum(*keyBegin) || *keyBegin == '_') // Key found
         {
             break;
         }
@@ -1132,7 +1132,7 @@ pair<string, bool> parseBoolKeyValPair(string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd)) // Characters of the key
+        else if(isalnum(*keyEnd) || *keyEnd == '_') // Characters of the key
         {
             keyEnd++;
         } 

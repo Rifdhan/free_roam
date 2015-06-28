@@ -32,6 +32,14 @@ void testParsing()
     myPair = parseStringKeyValPair("   \t < key=\"Value\">\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
+     // Valid
+    myPair = parseStringKeyValPair("   \t < _key=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+     // Valid
+    myPair = parseStringKeyValPair("   \t < k_ey=\"Value\">\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
     cout << "--------------------------------------------------------------------------" << endl;
     
     // Invalid
@@ -110,6 +118,9 @@ void testParsing()
     myPair = parseIntKeyValPair("   \t < key= 10e-1 >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
+    // Valid
+    myPair = parseIntKeyValPair("   \t < _ke_y= 10e-1 >\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
         
      // Invalid
     myPair = parseIntKeyValPair("   \t < key= -99+9>\t \t ");
@@ -169,6 +180,10 @@ void testParsing()
     myPair = parseDoubleKeyValPair("   \t < key= 1.8e2 >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
+    // Valid
+    myPair = parseDoubleKeyValPair("   \t < _ke_y_= 1.8e2 >\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
     // Invalid
     myPair = parseDoubleKeyValPair("   \t < key= 10f >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
@@ -212,6 +227,10 @@ void testParsing()
     
     // Valid
     myPair = parseBoolKeyValPair("   \t < key = true >\t \t ");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
+    
+    // Valid
+    myPair = parseBoolKeyValPair("   \t < _k_ey_ = true >\t \t ");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl;
     
     // Invalid
@@ -287,6 +306,10 @@ void testParsing()
     {
     // Valid
     pair<string, unsigned> myPair = parseUnsignedKeyValPair("<test= 123 >");
+    cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl; 
+    
+    // Valid
+    myPair = parseUnsignedKeyValPair("<_te_st_ = 123 >");
     cout << "first: \"" << myPair.first << "\", second: \"" << myPair.second << "\"" << endl; 
     
     // Invalid
