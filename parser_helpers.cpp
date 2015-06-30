@@ -77,7 +77,7 @@ bool isHeader(string line, string header)
 	
 	// Determine if the string is a matching header type
 	if (tempStr.substr(0, headLen) != header){
-		Log::error("Invalid type entered in the header \"" + line + "\" with type \"" + header + "\"");
+		//Log::error("Invalid type entered in the header \"" + line + "\" with type \"" + header + "\"");
 		return false;
 	}
 	
@@ -709,7 +709,7 @@ std::pair<std::string, unsigned> parseUnsignedKeyValPair(std::string line)
         {
             break;
         }
-        else if(isalnum(*keyEnd) || *keyBegin == '_') // Characters of the key
+        else if(isalnum(*keyEnd) || *keyEnd == '_') // Characters of the key
         {
             keyEnd++;
         } 

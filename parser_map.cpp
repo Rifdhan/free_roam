@@ -1,5 +1,5 @@
 // Parser - Map
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 // Performs all data parsing for the map
 
 
@@ -10,7 +10,7 @@ using namespace std;
 
 
 // Parses all map data
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 void parseMapData()
 {
     // Open the map file
@@ -29,10 +29,34 @@ void parseMapData()
         if(isHeader(line, "intersection"))
         {
             parseIntersection(mapFile);
+            while(getline(mapFile,line))
+            {
+                if(isWhitespace(line)) 
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            isFooter(line, "intersection");
         }
         else if(isHeader(line, "road"))
         {
             parseStreetSegment(mapFile);
+            while(getline(mapFile,line))
+            {
+                if(isWhitespace(line)) 
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            isFooter(line, "road");
         }
         else
         {
