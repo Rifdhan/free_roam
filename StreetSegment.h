@@ -8,7 +8,7 @@
 
 
 #include "primitives.h"
-
+#include "graphics.h"
 
 class StreetSegment
 {
