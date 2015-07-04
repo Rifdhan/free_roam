@@ -1,10 +1,10 @@
 // Intersection
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 // Contains information about a single intersection
 
 
 #include "Intersection.h"
-
+#include "climits"
 
 using namespace std;
 
@@ -21,6 +21,10 @@ Intersection::Intersection(const unsigned& newId, const PointC& newPosition)
     id = newId;
     position = newPosition;
     nConnectedStreetSegments = 0;
+    rightStreetSegmentId = INT_MAX;
+    topStreetSegmentId = INT_MAX;
+    leftStreetSegmentId = INT_MAX;
+    bottomStreetSegmentId = INT_MAX;
 }
 
 Intersection::Intersection(const Intersection& original)
@@ -95,4 +99,41 @@ unsigned Intersection::getLeftStreetSegmentId()
 unsigned Intersection::getBottomStreetSegmentId()
 {
     return bottomStreetSegmentId;
+}
+
+// Draw
+// By David Cheung
+// Draws the intersection connecting the street segments.
+void Intersection::draw()
+{
+        worldDrawRectCentered(position, PointC(INTERSECTION_WIDTH, INTERSECTION_WIDTH), true, ColourRgb(0.2, 0.2, 0.2));
+        
+        // Draw left sidewalk for intersection
+        if (leftStreetSegmentId == INT_MAX)
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION - SIDEWALK_WIDTH, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
+                PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));            
+        }
+        
+        // Draw right sidewalk for intersection
+        if (rightStreetSegmentId == INT_MAX)
+        {
+           worldDrawRectCorners(PointC(position.x + HALF_INTERSECTION + SIDEWALK_WIDTH, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
+                PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));                      
+        }
+        
+        // Draw top sidewalk for intersection
+        if (topStreetSegmentId == INT_MAX)
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION), 
+                PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));                      
+        }
+        
+        // Draw bottom sidewalk for intersection
+        if (bottomStreetSegmentId == INT_MAX)
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
+                PointC(position.x + HALF_INTERSECTION, position.y - HALF_INTERSECTION), true, ColourRgb(0.80, 0.80, 0.80));                      
+        }
+        
 }

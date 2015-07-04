@@ -1,5 +1,5 @@
 // Intersection
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 // Contains information about a single intersection
 
 
@@ -8,7 +8,11 @@
 
 
 #include "primitives.h"
+#include "graphics.h"
 
+#define SIDEWALK_WIDTH 1.6
+#define INTERSECTION_WIDTH 7.0
+#define HALF_INTERSECTION 3.5
 
 class Intersection
 {
@@ -44,6 +48,9 @@ public:
     unsigned getTopStreetSegmentId();
     unsigned getLeftStreetSegmentId();
     unsigned getBottomStreetSegmentId();
+    
+    // Drawing
+    void draw();
 };
 
 

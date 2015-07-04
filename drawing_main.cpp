@@ -17,8 +17,7 @@ void drawMap()
     for(auto iter = intersections.begin(); iter != intersections.end(); iter++)
     {
         // Draw the current intersection
-        worldDrawCircle(iter->second.getPosition(), 5.0, false, ColourRgb(0.5, 0.5, 0.5));
-        //worldDrawRectCentered(iter->second.getPosition(), PointC(9.0, 9.0), true, ColourRgb(0.5, 0.5, 0.5));
+        iter->second.draw();
     }
     
     // Iterate through all street segments
@@ -27,6 +26,5 @@ void drawMap()
         // Draw the current street segment
         //worldDrawRectCorners(const PointC& bottomLeft, const PointC& topRight, const bool& filled, const ColourRgb& colour);
         iter->second.draw();
-        //worldDrawRectCorners(iter->second.getStartIntersectionPosition(), iter->second.getEndIntersectionPosition(), false, ColourRgb(0.5,0.2,0.2));
     }
 }

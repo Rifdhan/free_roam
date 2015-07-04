@@ -61,21 +61,11 @@ PointC StreetSegment::getEndIntersectionPosition()
 }
 
 // Drawing
+// By David Cheung
 // Two lane road, one lane in each direction, yellow divider line between the lanes, sidewalk on either side
 // Should only need to use rectangle drawing functions (see graphics.h)
-// By David Cheung
 void StreetSegment::draw()
-{
-    const double roadWidth = 3.5;
-    const double sidewalkWidth = 1.5;
-    const double distFromIntersect = 3.5;
-    const double laneDividerHeight = 0.4;
-    const double laneDividerWidth = 0.3; // Half of lane divider width
-    const double laneDividerFromIntersect = 4; // Distance lane divider is from intersection
-    const ColourRgb laneColour = ColourRgb(1.0, 1.0, 1.0);
-    const ColourRgb sidewalkColour = ColourRgb(0.80, 0.80, 0.80);
-    const ColourRgb roadColour = ColourRgb(0.2, 0.2, 0.2);
-    
+{   
     // Draw vertical street segment
     if(startIntersectionPosition.x == endIntersectionPosition.x)
     {  
@@ -84,44 +74,44 @@ void StreetSegment::draw()
             // Road
             // Stop drawing before 3 meters before intersection
             // Width of each lane 3.5 meters 
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - roadWidth, startIntersectionPosition.y + distFromIntersect), 
-                PointC(endIntersectionPosition.x + roadWidth, endIntersectionPosition.y - distFromIntersect), true, roadColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - ROAD_WIDTH, startIntersectionPosition.y + DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x + ROAD_WIDTH, endIntersectionPosition.y - DIST_FROM_INTERSECT), true, ROAD_COLOUR);
             
             // Left sidewalk width: 1.5 meters
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - roadWidth, startIntersectionPosition.y + distFromIntersect), 
-                PointC(endIntersectionPosition.x - roadWidth - sidewalkWidth, endIntersectionPosition.y - distFromIntersect), true, sidewalkColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - ROAD_WIDTH, startIntersectionPosition.y + DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x - ROAD_WIDTH - SIDEWALK_WIDTH, endIntersectionPosition.y - DIST_FROM_INTERSECT), true, SIDEWALK_COLOUR);
             // Right sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x + roadWidth, startIntersectionPosition.y + distFromIntersect), 
-                PointC(endIntersectionPosition.x + roadWidth + sidewalkWidth, endIntersectionPosition.y - distFromIntersect), true, sidewalkColour);          
+            worldDrawRectCorners(PointC(startIntersectionPosition.x + ROAD_WIDTH, startIntersectionPosition.y + DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x + ROAD_WIDTH + SIDEWALK_WIDTH, endIntersectionPosition.y - DIST_FROM_INTERSECT), true, SIDEWALK_COLOUR);          
             
             // Draw lane dividers 0.1 meters width, 0.4 meters height    
-            for(int i = startIntersectionPosition.y + laneDividerFromIntersect; i < endIntersectionPosition.y - laneDividerFromIntersect; i++)
+            for(int i = startIntersectionPosition.y + LANE_DIVIDER_FROM_INTERSECT + 1; i < endIntersectionPosition.y - LANE_DIVIDER_FROM_INTERSECT; i++)
             {
-                worldDrawRectCorners(PointC(startIntersectionPosition.x - laneDividerWidth, i), 
-                    PointC(endIntersectionPosition.x + laneDividerWidth, i + laneDividerHeight), true, laneColour);    
+                worldDrawRectCorners(PointC(startIntersectionPosition.x - LANE_DIVIDER_WIDTH, i), 
+                    PointC(endIntersectionPosition.x + LANE_DIVIDER_WIDTH, i + LANE_DIVIDER_HEIGHT), true, LANE_COLOUR);    
             }    
                 
         }
         else // opposite direction
         {
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - roadWidth, startIntersectionPosition.y - distFromIntersect), 
-                PointC(endIntersectionPosition.x + roadWidth, endIntersectionPosition.y + distFromIntersect), true, roadColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - ROAD_WIDTH, startIntersectionPosition.y - DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x + ROAD_WIDTH, endIntersectionPosition.y + DIST_FROM_INTERSECT), true, ROAD_COLOUR);
 
             // Left sidewalk width: 1.5 meters
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - roadWidth, startIntersectionPosition.y - distFromIntersect), 
-                PointC(endIntersectionPosition.x - roadWidth - sidewalkWidth, endIntersectionPosition.y + distFromIntersect), 
-                true, sidewalkColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - ROAD_WIDTH, startIntersectionPosition.y - DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x - ROAD_WIDTH - SIDEWALK_WIDTH, endIntersectionPosition.y + DIST_FROM_INTERSECT), 
+                true, SIDEWALK_COLOUR);
                 
             // Right sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x + roadWidth, startIntersectionPosition.y - distFromIntersect), 
-                PointC(endIntersectionPosition.x + roadWidth + sidewalkWidth, endIntersectionPosition.y + distFromIntersect), 
-                true, sidewalkColour);                
+            worldDrawRectCorners(PointC(startIntersectionPosition.x + ROAD_WIDTH, startIntersectionPosition.y - DIST_FROM_INTERSECT), 
+                PointC(endIntersectionPosition.x + ROAD_WIDTH + SIDEWALK_WIDTH, endIntersectionPosition.y + DIST_FROM_INTERSECT), 
+                true, SIDEWALK_COLOUR);                
             
             // Draw lane dividers 0.1 meters width, 0.4 meters height    
-            for(int i = startIntersectionPosition.y - laneDividerFromIntersect; i > endIntersectionPosition.y + laneDividerFromIntersect; i--)
+            for(int i = startIntersectionPosition.y - LANE_DIVIDER_FROM_INTERSECT - 1; i > endIntersectionPosition.y + LANE_DIVIDER_FROM_INTERSECT; i--)
             {
-                worldDrawRectCorners(PointC(startIntersectionPosition.x + laneDividerWidth, i), 
-                    PointC(endIntersectionPosition.x - laneDividerWidth, i + laneDividerHeight), true, laneColour);    
+                worldDrawRectCorners(PointC(startIntersectionPosition.x + LANE_DIVIDER_WIDTH, i), 
+                    PointC(endIntersectionPosition.x - LANE_DIVIDER_WIDTH, i + LANE_DIVIDER_HEIGHT), true, LANE_COLOUR);    
             }     
         }
     }
@@ -129,40 +119,40 @@ void StreetSegment::draw()
     {
         if(startIntersectionPosition.x < endIntersectionPosition.x) // left-to-right direction
         {
-            worldDrawRectCorners(PointC(startIntersectionPosition.x + distFromIntersect, startIntersectionPosition.y - roadWidth), 
-                PointC(endIntersectionPosition.x - distFromIntersect, endIntersectionPosition.y + roadWidth), true, roadColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x + DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH), 
+                PointC(endIntersectionPosition.x - DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH), true, ROAD_COLOUR);
             
             // Top sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x + distFromIntersect, endIntersectionPosition.y + roadWidth + sidewalkWidth), 
-                PointC(endIntersectionPosition.x - distFromIntersect, endIntersectionPosition.y + roadWidth), true, sidewalkColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x + DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH + SIDEWALK_WIDTH), 
+                PointC(endIntersectionPosition.x - DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH), true, SIDEWALK_COLOUR);
             
             // Bottom sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x + distFromIntersect, startIntersectionPosition.y - roadWidth - sidewalkWidth), 
-                PointC(endIntersectionPosition.x - distFromIntersect, startIntersectionPosition.y - roadWidth), true, sidewalkColour);        
+            worldDrawRectCorners(PointC(startIntersectionPosition.x + DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH - SIDEWALK_WIDTH), 
+                PointC(endIntersectionPosition.x - DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH), true, SIDEWALK_COLOUR);        
                 
-            for(int j = startIntersectionPosition.x + laneDividerFromIntersect; j < endIntersectionPosition.x - laneDividerFromIntersect; j++)
+            for(int j = startIntersectionPosition.x + LANE_DIVIDER_FROM_INTERSECT + 1; j < endIntersectionPosition.x - LANE_DIVIDER_FROM_INTERSECT; j++)
             {
-                worldDrawRectCorners(PointC(j, startIntersectionPosition.y - laneDividerWidth), 
-                    PointC(j + laneDividerHeight, endIntersectionPosition.y + laneDividerWidth), true, laneColour); 
+                worldDrawRectCorners(PointC(j, startIntersectionPosition.y - LANE_DIVIDER_WIDTH), 
+                    PointC(j + LANE_DIVIDER_HEIGHT, endIntersectionPosition.y + LANE_DIVIDER_WIDTH), true, LANE_COLOUR); 
             }    
         }
         else // opposite direction
         {
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - distFromIntersect, startIntersectionPosition.y - roadWidth), 
-                PointC(endIntersectionPosition.x + distFromIntersect, endIntersectionPosition.y + roadWidth), true, roadColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH), 
+                PointC(endIntersectionPosition.x + DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH), true, ROAD_COLOUR);
             
             // Top sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - distFromIntersect, endIntersectionPosition.y + roadWidth + sidewalkWidth), 
-                PointC(endIntersectionPosition.x + distFromIntersect, endIntersectionPosition.y + roadWidth), true, sidewalkColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH + SIDEWALK_WIDTH), 
+                PointC(endIntersectionPosition.x + DIST_FROM_INTERSECT, endIntersectionPosition.y + ROAD_WIDTH), true, SIDEWALK_COLOUR);
             
             // Bottom sidewalk
-            worldDrawRectCorners(PointC(startIntersectionPosition.x - distFromIntersect, startIntersectionPosition.y - roadWidth - sidewalkWidth), 
-                PointC(endIntersectionPosition.x + distFromIntersect, startIntersectionPosition.y - roadWidth), true, sidewalkColour);
+            worldDrawRectCorners(PointC(startIntersectionPosition.x - DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH - SIDEWALK_WIDTH), 
+                PointC(endIntersectionPosition.x + DIST_FROM_INTERSECT, startIntersectionPosition.y - ROAD_WIDTH), true, SIDEWALK_COLOUR);
                 
-            for(int i = startIntersectionPosition.x - laneDividerFromIntersect; i > endIntersectionPosition.x + laneDividerFromIntersect; i--)
+            for(int i = startIntersectionPosition.x - LANE_DIVIDER_FROM_INTERSECT - 1; i > endIntersectionPosition.x + LANE_DIVIDER_FROM_INTERSECT; i--)
             {
-                worldDrawRectCorners(PointC(i, startIntersectionPosition.y - laneDividerWidth), 
-                    PointC(i + laneDividerHeight, endIntersectionPosition.y + laneDividerWidth), true, laneColour); 
+                worldDrawRectCorners(PointC(i, startIntersectionPosition.y - LANE_DIVIDER_WIDTH), 
+                    PointC(i + LANE_DIVIDER_HEIGHT, endIntersectionPosition.y + LANE_DIVIDER_WIDTH), true, LANE_COLOUR); 
             }                            
         } 
     }

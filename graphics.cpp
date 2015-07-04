@@ -46,10 +46,10 @@ void worldDrawRectCentered(const PointC& center, const PointC& widthHeight, cons
         glColor3f(colour.red, colour.green, colour.blue);
         
         // Draw four vertices
-        glVertex2f(scale * (center.x - widthHeight.x) / 2.0, scale * (center.y - widthHeight.y) / 2.0);
-        glVertex2f(scale * (center.x + widthHeight.x) / 2.0, scale * (center.y - widthHeight.y) / 2.0);
-        glVertex2f(scale * (center.x + widthHeight.x) / 2.0, scale * (center.y + widthHeight.y) / 2.0);
-        glVertex2f(scale * (center.x - widthHeight.x) / 2.0, scale * (center.y + widthHeight.y) / 2.0);
+        glVertex2f(scale * (center.x - widthHeight.x / 2.0), scale * (center.y - widthHeight.y / 2.0));
+        glVertex2f(scale * (center.x + widthHeight.x / 2.0), scale * (center.y - widthHeight.y / 2.0));
+        glVertex2f(scale * (center.x + widthHeight.x / 2.0), scale * (center.y + widthHeight.y / 2.0));
+        glVertex2f(scale * (center.x - widthHeight.x / 2.0), scale * (center.y + widthHeight.y / 2.0));
     glEnd();
 }
 

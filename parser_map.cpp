@@ -107,11 +107,42 @@ void parseStreetSegment(ifstream& mapFile)
     // Create a new StreetSegment object
     StreetSegment newStreetSegment(id.second);
     
+    const PointC start = intersections.at(startIntersection.second).getPosition();
+    const PointC end = intersections.at(endIntersection.second).getPosition();
+    
     // Set starting intersection ID and position
-    newStreetSegment.setStartIntersectionId(startIntersection.second, intersections.at(startIntersection.second).getPosition());
+    newStreetSegment.setStartIntersectionId(startIntersection.second, start);
     
     // Set ending intersection ID and position
-    newStreetSegment.setEndIntersectionId(endIntersection.second, intersections.at(endIntersection.second).getPosition());
+    newStreetSegment.setEndIntersectionId(endIntersection.second, end);
+    
+    // Update intersection with the connected street segment (top, bottom, left, right)
+    if (start.x == end.x) // Vertical separation between intersections
+    {
+        if (start.y < end.y)
+        {
+            intersections.at(startIntersection.second).setTopStreetSegmentId(id.second);
+            intersections.at(endIntersection.second).setBottomStreetSegmentId(id.second);   
+        }
+        else
+        {
+            intersections.at(endIntersection.second).setTopStreetSegmentId(id.second);
+            intersections.at(startIntersection.second).setBottomStreetSegmentId(id.second);        
+        }
+    }
+    else // Horizontal separation between intersections
+    {
+        if (start.x < end.x)
+        {
+            intersections.at(startIntersection.second).setRightStreetSegmentId(id.second);
+            intersections.at(endIntersection.second).setLeftStreetSegmentId(id.second);   
+        }
+        else
+        {
+            intersections.at(endIntersection.second).setRightStreetSegmentId(id.second);
+            intersections.at(startIntersection.second).setLeftStreetSegmentId(id.second);        
+        }    
+    }   
     
     // Add it to the list of street segments
     streetSegments[id.second] = newStreetSegment;
