@@ -109,31 +109,101 @@ void Intersection::draw()
         worldDrawRectCentered(position, PointC(INTERSECTION_WIDTH, INTERSECTION_WIDTH), true, ColourRgb(0.2, 0.2, 0.2));
         
         // Draw left sidewalk for intersection
-        if (leftStreetSegmentId == INT_MAX)
+        if(leftStreetSegmentId == INT_MAX)
         {
            worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION - SIDEWALK_WIDTH, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
                 PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));            
         }
+        else
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION - CROSSWALK_BORDER, position.y - HALF_INTERSECTION), 
+                PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION), 
+                true, ColourRgb(1.0, 1.0, 1.0));
+                
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION - CROSSWALK_BORDER - CROSSWALK_WIDTH, position.y - HALF_INTERSECTION), 
+                PointC(position.x - HALF_INTERSECTION - CROSSWALK_WIDTH, position.y + HALF_INTERSECTION), 
+                true, ColourRgb(1.0, 1.0, 1.0));
+           
+           // Draw crosswalk dashed lines 
+           for(double j = position.y - HALF_INTERSECTION; j < position.y + HALF_INTERSECTION; j += 0.8)
+           {
+                worldDrawRectCorners(PointC(position.x  - HALF_INTERSECTION, j + CROSSWALK_LINES_WIDTH), 
+                    PointC(position.x - HALF_INTERSECTION - CROSSWALK_WIDTH, j + CROSSWALK_LINES_WIDTH * 2.0), 
+                    true, ColourRgb(1.0, 1.0, 1.0));                
+           }                                               
+        }
         
         // Draw right sidewalk for intersection
-        if (rightStreetSegmentId == INT_MAX)
+        if(rightStreetSegmentId == INT_MAX)
         {
            worldDrawRectCorners(PointC(position.x + HALF_INTERSECTION + SIDEWALK_WIDTH, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
                 PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));                      
         }
+        else // Draw crosswalk
+        {
+           worldDrawRectCorners(PointC(position.x + HALF_INTERSECTION, position.y - HALF_INTERSECTION), 
+                PointC(position.x + HALF_INTERSECTION + CROSSWALK_BORDER, position.y + HALF_INTERSECTION), 
+                true, ColourRgb(1.0, 1.0, 1.0));
+                      
+           worldDrawRectCorners(PointC(position.x + HALF_INTERSECTION + CROSSWALK_WIDTH, position.y - HALF_INTERSECTION), 
+                PointC(position.x + HALF_INTERSECTION + CROSSWALK_BORDER + CROSSWALK_WIDTH, position.y + HALF_INTERSECTION), 
+                true, ColourRgb(1.0, 1.0, 1.0));
+           
+           // Draw crosswalk dashed lines     
+           for(double j = position.y - HALF_INTERSECTION; j < position.y + HALF_INTERSECTION; j += 0.8)
+           {
+                worldDrawRectCorners(PointC(position.x  + HALF_INTERSECTION, j + CROSSWALK_LINES_WIDTH), 
+                    PointC(position.x + HALF_INTERSECTION + CROSSWALK_WIDTH, j + CROSSWALK_LINES_WIDTH * 2.0), 
+                    true, ColourRgb(1.0, 1.0, 1.0));                
+           }                 
+        }
         
         // Draw top sidewalk for intersection
-        if (topStreetSegmentId == INT_MAX)
+        if(topStreetSegmentId == INT_MAX)
         {
            worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION), 
                 PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + SIDEWALK_WIDTH), true, ColourRgb(0.80, 0.80, 0.80));                      
         }
+        else // Draw crosswalk
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION), 
+                PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + CROSSWALK_BORDER), 
+                true, ColourRgb(1.0, 1.0, 1.0));  
+
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y + HALF_INTERSECTION + CROSSWALK_WIDTH), 
+                PointC(position.x + HALF_INTERSECTION, position.y + HALF_INTERSECTION + CROSSWALK_BORDER + CROSSWALK_WIDTH), 
+                true, ColourRgb(1.0, 1.0, 1.0));
+           
+           // Draw crosswalk dashed lines      
+           for(double j = position.x - HALF_INTERSECTION; j < position.x + HALF_INTERSECTION; j += 0.8)
+           {
+                worldDrawRectCorners(PointC(j + CROSSWALK_LINES_WIDTH, position.y + HALF_INTERSECTION), 
+                    PointC(j + CROSSWALK_LINES_WIDTH * 2.0, position.y + HALF_INTERSECTION + CROSSWALK_WIDTH), 
+                    true, ColourRgb(1.0, 1.0, 1.0));              
+           }                          
+        }
         
         // Draw bottom sidewalk for intersection
-        if (bottomStreetSegmentId == INT_MAX)
+        if(bottomStreetSegmentId == INT_MAX)
         {
            worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y - HALF_INTERSECTION - SIDEWALK_WIDTH), 
                 PointC(position.x + HALF_INTERSECTION, position.y - HALF_INTERSECTION), true, ColourRgb(0.80, 0.80, 0.80));                      
         }
-        
+        else // Draw crosswalk
+        {
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y - HALF_INTERSECTION - CROSSWALK_BORDER), 
+                PointC(position.x + HALF_INTERSECTION, position.y - HALF_INTERSECTION), true, ColourRgb(1.0, 1.0, 1.0));
+                        
+           worldDrawRectCorners(PointC(position.x - HALF_INTERSECTION, position.y - HALF_INTERSECTION - CROSSWALK_BORDER - CROSSWALK_WIDTH), 
+                PointC(position.x + HALF_INTERSECTION, position.y - HALF_INTERSECTION - CROSSWALK_WIDTH), true, ColourRgb(1.0, 1.0, 1.0));
+           
+           // Draw crosswalk dashed lines      
+           for(double j = position.x - HALF_INTERSECTION; j < position.x + HALF_INTERSECTION; j += 0.8)
+           {
+                worldDrawRectCorners(PointC(j + CROSSWALK_LINES_WIDTH, position.y - HALF_INTERSECTION), 
+                    PointC(j + CROSSWALK_LINES_WIDTH * 2.0, position.y - HALF_INTERSECTION - CROSSWALK_WIDTH), 
+                    true, ColourRgb(1.0, 1.0, 1.0));              
+           }                                         
+        }
+               
 }

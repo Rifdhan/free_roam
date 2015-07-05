@@ -10,7 +10,7 @@ using namespace std;
 
 
 // Global scaling factor
-double scale = 0.0075;
+double scale = 0.009;
 
 
 // World drawing functions

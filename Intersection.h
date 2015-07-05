@@ -13,6 +13,9 @@
 #define SIDEWALK_WIDTH 1.6
 #define INTERSECTION_WIDTH 7.0
 #define HALF_INTERSECTION 3.5
+#define CROSSWALK_BORDER 0.3
+#define CROSSWALK_WIDTH 1.6
+#define CROSSWALK_LINES_WIDTH 0.3 
 
 class Intersection
 {

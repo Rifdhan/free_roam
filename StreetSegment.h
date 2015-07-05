@@ -16,7 +16,7 @@
 #define DIST_FROM_INTERSECT 3.5
 #define LANE_DIVIDER_HEIGHT 0.4
 #define LANE_DIVIDER_WIDTH 0.3 // Half of lane divider width
-#define LANE_DIVIDER_FROM_INTERSECT 4 // Distance lane divider is from intersection
+#define LANE_DIVIDER_FROM_INTERSECT 6 // Distance lane divider is from intersection
 #define LANE_COLOUR ColourRgb(1.0, 1.0, 1.0)
 #define SIDEWALK_COLOUR ColourRgb(0.80, 0.80, 0.80)
 #define ROAD_COLOUR ColourRgb(0.2, 0.2, 0.2)
