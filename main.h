@@ -18,11 +18,12 @@
 #include "drawing_main.h"
 #include "Intersection.h"
 #include "StreetSegment.h"
-
+#include "Vehicle.h"
 
 // Map data containers
 extern std::unordered_map<unsigned, Intersection> intersections;
 extern std::unordered_map<unsigned, StreetSegment> streetSegments;
+extern std::unordered_map<std::string, Vehicle> vehicles;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer

@@ -63,6 +63,7 @@ void parseMapData()
             Log::warning("Unrecognized entry in map file: '" + line + "'");
         }
     }
+    mapFile.close();
 }
 
 // Parses a single intersection

@@ -12,6 +12,7 @@ using namespace std;
 // Map data containers
 unordered_map<unsigned, Intersection> intersections;
 unordered_map<unsigned, StreetSegment> streetSegments;
+unordered_map<string, Vehicle> vehicles;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer

@@ -33,7 +33,10 @@ protected:
     
 public:
     // Constructors/destructors
+    Vehicle();
+    
     Vehicle(const VehicleType::VehicleType& newType, const std::string& newName, const double& newMass);
+    
     virtual ~Vehicle();
     
     // General
@@ -44,7 +47,8 @@ public:
     double getMass();
     
     // Drawing
-    virtual void draw() = 0;
+    //virtual void draw() = 0;
+    
 };
 
 

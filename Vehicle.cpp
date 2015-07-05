@@ -10,6 +10,10 @@ using namespace std;
 
 
 // Constructors/destructors
+Vehicle::Vehicle()
+{
+
+}
 
 Vehicle::Vehicle(const VehicleType::VehicleType& newType, const string& newName, const double& newMass)
 {
