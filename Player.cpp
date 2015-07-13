@@ -73,7 +73,46 @@ void Player::draw()
     // Draw head
     worldDrawCircle(pPosition, 2.0, true, ColourRgb(1.0, 1.0, 1.0));
     
-    // Draw eyes
-    worldDrawCircle(PointC((pPosition.x - 1.0), pPosition.y), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-    worldDrawCircle(PointC((pPosition.x + 1.0), pPosition.y), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+    
+    // Draw hands and eyes relative to direction the player is facing
+    if(pDirection == keyDown)
+    {
+        // Draw eyes
+        worldDrawCircle(PointC((pPosition.x - 1.0), pPosition.y - 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 1.0), pPosition.y - 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        
+        // Hands        
+        worldDrawCircle(PointC((pPosition.x - 2.5), pPosition.y - 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 2.5), pPosition.y - 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+    }
+    else if(pDirection == keyUp)
+    {
+        // Draw eyes
+        worldDrawCircle(PointC((pPosition.x - 1.0), pPosition.y + 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 1.0), pPosition.y + 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));    
+        
+        // Hands
+        worldDrawCircle(PointC((pPosition.x - 2.5), pPosition.y + 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 2.5), pPosition.y + 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));    
+    }
+    else if(pDirection == keyLeft)
+    {
+        // Draw eyes
+        worldDrawCircle(PointC((pPosition.x - 0.3), pPosition.y - 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x - 0.3), pPosition.y + 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));    
+        
+        // Hands
+        worldDrawCircle(PointC((pPosition.x - 0.5), pPosition.y + 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x - 0.5), pPosition.y - 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));        
+    }
+    else if(pDirection == keyRight)
+    {
+        // Draw eyes
+        worldDrawCircle(PointC((pPosition.x + 0.3), pPosition.y - 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 0.3), pPosition.y + 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+        
+        // Hands
+        worldDrawCircle(PointC((pPosition.x + 0.5), pPosition.y + 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+        worldDrawCircle(PointC((pPosition.x + 0.5), pPosition.y - 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));        
+    }        
 }
