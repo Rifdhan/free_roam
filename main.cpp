@@ -1,5 +1,5 @@
 // Main
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 // Contains the main functions of the program
 
 
@@ -13,6 +13,7 @@ using namespace std;
 unordered_map<unsigned, Intersection> intersections;
 unordered_map<unsigned, StreetSegment> streetSegments;
 unordered_map<string, Vehicle> vehicles;
+Player player;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer
@@ -29,10 +30,19 @@ void initializeGraphics(int argc, char **argv)
     
     // Setup callback functions
     glutDisplayFunc(drawScreen);
-    //glutIdleFunc(drawScreen);
+
     glutReshapeFunc(windowResize);
     glutKeyboardFunc(handleKeyboard);
 }
+
+
+// Screen update function
+// By David Cheung
+void updateScreen()
+{
+    glutPostRedisplay();
+}
+
 
 // Main parsing function
 // By Rifdhan Nazeer
@@ -45,17 +55,17 @@ void parseAllData()
 // Main function
 // By Rifdhan Nazeer
 int main(int argc, char **argv)
-{
+{ 
     // Initialize graphics
     initializeGraphics(argc, argv);
     
     // Parse data
     parseAllData();
     
+    glutIdleFunc(updateScreen);
+    
     // Enter OpenGL event loop
     glutMainLoop();
-    
-    return 0;
 }
 
 // Main screen update function (OpenGL callback)
@@ -68,6 +78,9 @@ void drawScreen()
     
     // Draw the map
     drawMap();
+    
+    // Draw the player
+    player.draw();
     
     // Swap the buffers to display the current frame on screen
     glFlush();
@@ -87,7 +100,7 @@ void windowResize(int newWidth, int newHeight)
 }
 
 // Function to handle keyboard events
-// By Rifdhan Nazeer
+// By Rifdhan Nazeer and David Cheung
 void handleKeyboard(unsigned char keyPressed, int mouseX, int mouseY)
 {
     // Handle key pressed
@@ -96,6 +109,18 @@ void handleKeyboard(unsigned char keyPressed, int mouseX, int mouseY)
         case 27: // ESC - exit
             performExit();
             break;
+        case 97: // Player - Left 'a'
+	        player.move(LEFT);
+	        break;
+        case 100: // Player - Right 'd'
+	        player.move(RIGHT);
+	        break;
+        case 115: // Player - Down 's'
+	        player.move(DOWN);
+	        break;
+        case 119: // Player - Up 'w'
+	        player.move(UP);
+	        break;            
     }
 }
 
