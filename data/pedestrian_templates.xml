@@ -1,0 +1,8 @@
+// Pedestrian (types: normal, thug, police)
+<pedestrian>
+    <type="normal">
+    <name="Ped_Name">
+    <health=0.0>
+    <damage=0.0>
+    <mass=0.0>   // Kilograms
+</pedestrian>

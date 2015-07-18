@@ -13,6 +13,7 @@ using namespace std;
 unordered_map<unsigned, Intersection> intersections;
 unordered_map<unsigned, StreetSegment> streetSegments;
 unordered_map<string, Vehicle> vehicles;
+unordered_map<string, Pedestrian> pedestrians;
 Player player;
 int windowWidth, windowHeight;
 
@@ -55,6 +56,8 @@ void parseAllData()
 {
     // Parse map data first
     parseMapData();
+    parseAllPed();
+    parseAllVehicles();
 }
 
 // Main function
@@ -85,6 +88,7 @@ void drawScreen()
     //usleep(500000);
     // Draw the map
     drawMap();
+    drawPed();
     
     player.draw();
         
@@ -147,7 +151,7 @@ void mouseMovement(int mouseX, int mouseY)
     double relativeX = mouseX - (windowWidth / 2.0);
     double relativeY = mouseY - (windowHeight / 2.0);
 
-    cout << relativeX << "-" << -relativeY << endl;
+    //cout << relativeX << "-" << -relativeY << endl;
     //cout << mouseX << "~" << mouseY << endl;
     //cout << player.getAngle() << endl;
     player.angleRotate(relativeX, -relativeY);

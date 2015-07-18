@@ -7,12 +7,15 @@
 
 #include <string>
 #include "primitives.h"
+#include "graphics.h"
+#include <iostream>
 
 class Pedestrian
 {
 protected:
 	// General
 	std::string name;
+	std::string type;
 	double health;
 	double damage;	
 
@@ -26,7 +29,7 @@ public:
 	// Constructors/destructors
 	Pedestrian();
 	
-	Pedestrian(const std::string& newName, const double& newHp, const double& newDmg, const double& newMass);
+	Pedestrian(const std::string& newName, const std::string& newType, const double& newHp, const double& newDmg, const double& newMass);
 
 	virtual ~Pedestrian();
 	
@@ -51,7 +54,10 @@ public:
 	PointC getVelocity();
 
 	void setVelocity(const PointC& newVelocity);
+	
+	PointC getPos();
 
+    void setPos(PointC newPos);
 
 	// drawing pedestrian
 	void draw();

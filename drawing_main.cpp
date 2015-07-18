@@ -28,3 +28,12 @@ void drawMap()
         iter->second.draw();
     }
 }
+
+void drawPed()
+{
+    Pedestrian newPed = pedestrians["Joe"];
+    newPed.setPos(PointC(50,50));
+    newPed.draw();
+
+
+}

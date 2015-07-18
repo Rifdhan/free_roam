@@ -26,11 +26,15 @@
 #include "StreetSegment.h"
 #include "Vehicle.h"
 #include "Player.h"
+#include "Pedestrian.h"
+#include "parser_vehicles.h"
+#include "parser_pedestrians.h"
 
 // Map data containers
 extern std::unordered_map<unsigned, Intersection> intersections;
 extern std::unordered_map<unsigned, StreetSegment> streetSegments;
 extern std::unordered_map<std::string, Vehicle> vehicles;
+extern std::unordered_map<std::string, Pedestrian> pedestrians;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer

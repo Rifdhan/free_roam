@@ -1,0 +1,8 @@
+
+<pedestrian>
+    <type="normal">
+    <name="Joe">
+    <health=50.0>
+    <damage=5.0>
+    <mass=50.0>   
+</pedestrian>

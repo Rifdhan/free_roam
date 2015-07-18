@@ -27,7 +27,7 @@ void parseAllVehicles()
         // This line must be a header, determine the header type
         if(isHeader(line, "vehicle"))
         {
-            //parseVehicle(vehicleFile);
+            parseVehicle(vehicleFile);
             while(getline(vehicleFile,line))
             {
                 if(isWhitespace(line)) 
