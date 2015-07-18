@@ -18,6 +18,7 @@
 #include <utility>
 #include <unordered_map>
 #include <GL/glut.h>
+#include <unistd.h>
 
 #include "parser_map.h"
 #include "drawing_main.h"
@@ -61,6 +62,14 @@ void windowResize(int newWidth, int newHeight);
 // Function to handle keyboard events (OpenGL callback)
 // By Rifdhan Nazeer and David
 void handleKeyboard(unsigned char keyPressed, int mouseX, int mouseY);
+
+// Function to handle mouse events
+// By David Cheung
+void handleMouse(int button, int state, int mouseX, int mouseY);
+
+// Function to handle mouse passive movement
+// By David Cheung
+void mouseMovement(int mouseX, int mouseY);
 
 // Handles ending the program
 // By Rifdhan Nazeer

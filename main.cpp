@@ -14,6 +14,7 @@ unordered_map<unsigned, Intersection> intersections;
 unordered_map<unsigned, StreetSegment> streetSegments;
 unordered_map<string, Vehicle> vehicles;
 Player player;
+int windowWidth, windowHeight;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer
@@ -26,13 +27,17 @@ void initializeGraphics(int argc, char **argv)
     // Create an output window
     glutCreateWindow("Free Roam");
     glutInitWindowSize(1024, 768);
-    glutInitWindowPosition(50, 50); // Position of top-left corner
+    glutInitWindowPosition(50 , 50); // Position of top-left corner
     
+
     // Setup callback functions
     glutDisplayFunc(drawScreen);
 
     glutReshapeFunc(windowResize);
     glutKeyboardFunc(handleKeyboard);
+    glutMouseFunc(handleMouse);
+    glutMotionFunc(mouseMovement);
+    glutPassiveMotionFunc(mouseMovement);
 }
 
 
@@ -62,6 +67,7 @@ int main(int argc, char **argv)
     // Parse data
     parseAllData();
     
+    // Update Screen
     glutIdleFunc(updateScreen);
     
     // Enter OpenGL event loop
@@ -75,13 +81,13 @@ void drawScreen()
     // Erase previous drawings
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
-    
+
+    //usleep(500000);
     // Draw the map
     drawMap();
     
-    // Draw the player
     player.draw();
-    
+        
     // Swap the buffers to display the current frame on screen
     glFlush();
     //glutSwapBuffers();
@@ -91,7 +97,9 @@ void drawScreen()
 // By Rifdhan Nazeer
 void windowResize(int newWidth, int newHeight)
 {
-    glViewport(0,0,newWidth,newHeight);
+    windowWidth = newWidth;
+    windowHeight = newHeight;
+    glViewport(0,0, newWidth, newHeight);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     //gluPerspective(45.0f,(GLfloat)newWidth/(GLfloat)newHeight,0.1f,100.0f);
@@ -103,6 +111,7 @@ void windowResize(int newWidth, int newHeight)
 // By Rifdhan Nazeer and David Cheung
 void handleKeyboard(unsigned char keyPressed, int mouseX, int mouseY)
 {
+
     // Handle key pressed
     switch(keyPressed)
     {
@@ -121,7 +130,27 @@ void handleKeyboard(unsigned char keyPressed, int mouseX, int mouseY)
         case 119: // Player - Up 'w'
 	        player.move(UP);
 	        break;            
-    }
+    } 
+}
+
+// Function to handle mouse events
+// By David Cheung
+void handleMouse(int button, int state, int mouseX, int mouseY)
+{
+        
+}
+
+// Function to handle mouse movement
+// By David Cheung
+void mouseMovement(int mouseX, int mouseY)
+{
+    double relativeX = mouseX - (windowWidth / 2.0);
+    double relativeY = mouseY - (windowHeight / 2.0);
+
+    cout << relativeX << "-" << -relativeY << endl;
+    //cout << mouseX << "~" << mouseY << endl;
+    //cout << player.getAngle() << endl;
+    player.angleRotate(relativeX, -relativeY);
 }
 
 // Handles ending the program

@@ -66,53 +66,38 @@ void Player::move(int direction)
 	}
 }
 
+
+// Calculate Player's angle
+// By David Cheung
+void Player::angleRotate(double mouseX, double mouseY)
+{
+    playerAngle = atan2((mouseY - pPosition.y),(mouseX - pPosition.x)) * RAD_TO_DEG;
+}
+
+
 // Player draw function
 // By David Cheung
 void Player::draw()
 {
-    // Draw head
-    worldDrawCircle(pPosition, 2.0, true, ColourRgb(1.0, 1.0, 1.0));
+    glMatrixMode(GL_MODELVIEW);
+   
+    glPushMatrix();
+
+    glTranslatef(pPosition.x * scale, pPosition.y * scale, 0.0);
     
+    glRotatef(playerAngle, 0.0f, 0.0f, 1.0f);
     
-    // Draw hands and eyes relative to direction the player is facing
-    if(pDirection == keyDown)
-    {
-        // Draw eyes
-        worldDrawCircle(PointC((pPosition.x - 1.0), pPosition.y - 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 1.0), pPosition.y - 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        
-        // Hands        
-        worldDrawCircle(PointC((pPosition.x - 2.5), pPosition.y - 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 2.5), pPosition.y - 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
-    }
-    else if(pDirection == keyUp)
-    {
-        // Draw eyes
-        worldDrawCircle(PointC((pPosition.x - 1.0), pPosition.y + 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 1.0), pPosition.y + 0.3), 0.3, true, ColourRgb(1.0, 1.0, 1.0));    
-        
-        // Hands
-        worldDrawCircle(PointC((pPosition.x - 2.5), pPosition.y + 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 2.5), pPosition.y + 0.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));    
-    }
-    else if(pDirection == keyLeft)
-    {
-        // Draw eyes
-        worldDrawCircle(PointC((pPosition.x - 0.3), pPosition.y - 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x - 0.3), pPosition.y + 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));    
-        
-        // Hands
-        worldDrawCircle(PointC((pPosition.x - 0.5), pPosition.y + 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x - 0.5), pPosition.y - 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));        
-    }
-    else if(pDirection == keyRight)
-    {
-        // Draw eyes
-        worldDrawCircle(PointC((pPosition.x + 0.3), pPosition.y - 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 0.3), pPosition.y + 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
-        
-        // Hands
-        worldDrawCircle(PointC((pPosition.x + 0.5), pPosition.y + 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
-        worldDrawCircle(PointC((pPosition.x + 0.5), pPosition.y - 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));        
-    }        
+    // Character initially positioned facing right
+    // Draw Head
+    worldDrawCircle(PointC(0, 0), 2.0, true, ColourRgb(1.0, 1.0, 1.0));
+    
+    // Draw Eyes
+    worldDrawCircle(PointC(0.3, -1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+    worldDrawCircle(PointC(0.3, 1.0), 0.3, true, ColourRgb(1.0, 1.0, 1.0));
+   
+    // Hands
+    worldDrawCircle(PointC(0.5, 2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+    worldDrawCircle(PointC(0.5, -2.5), 0.5, true, ColourRgb(1.0, 1.0, 1.0));
+         
+    glPopMatrix();
 }

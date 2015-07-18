@@ -13,6 +13,7 @@ using namespace std;
 double scale = 0.009;
 
 
+
 // World drawing functions
 
 // Draws a rectangle using corners

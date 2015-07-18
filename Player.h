@@ -8,9 +8,11 @@
 #include "primitives.h"
 #include <string>
 #include "graphics.h"
+#include <math.h>
+#include <GL/glut.h>
 
-#define START_X 10
-#define START_Y 10
+#define START_X 0
+#define START_Y 0   
 
 
 // Direction constants that we use for moving the character
@@ -47,14 +49,16 @@ public:
 	int getLevel()								{ return pLevel; }
 	int getGold()								{ return pGold; }
 	std::string getName()						{ return pName; }
+    double getAngle()                           { return playerAngle; }
 
-    PointC GetPosition()						{ return pPosition; }
-	void SetPosition(PointC newPosition)		{ pPosition = newPosition; }
+    PointC getPosition()						{ return pPosition; }
+	void setPosition(PointC newPosition)		{ pPosition = newPosition; }
 
     bool isAlive()								{ return (pHealth > 0); }
     void move(int direction);
     bool inMap(int x, int y);
 
+    void angleRotate(double mouseX, double mouseY);
     // Draw player
     void draw();
 
@@ -67,7 +71,8 @@ protected:
     int pGold;			// Player's gold
 	int pExperience;	// Player's experience points
 	int pLevel;		    // Player's level
-    int pDirection;     // Player's direction    
+    int pDirection;     // Player's direction  
+    float playerAngle; // Player's direction (angle) 
 };
 
 #endif // PLAYER_H
