@@ -31,9 +31,9 @@ void drawMap()
 
 void drawPed()
 {
-    Pedestrian newPed = pedestrians["Joe"];
-    newPed.setPos(PointC(50,50));
-    newPed.draw();
-
-
+    for(auto iter = pedestrians.begin(); iter != pedestrians.end(); iter++)
+    {
+        iter->second.moveToPt();
+        iter->second.draw();
+    }
 }

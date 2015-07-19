@@ -20,21 +20,24 @@
 #include <GL/glut.h>
 #include <unistd.h>
 
+#include "Pedestrian.h"
 #include "parser_map.h"
 #include "drawing_main.h"
 #include "Intersection.h"
 #include "StreetSegment.h"
 #include "Vehicle.h"
 #include "Player.h"
-#include "Pedestrian.h"
 #include "parser_vehicles.h"
 #include "parser_pedestrians.h"
+
+class Pedestrian;
 
 // Map data containers
 extern std::unordered_map<unsigned, Intersection> intersections;
 extern std::unordered_map<unsigned, StreetSegment> streetSegments;
 extern std::unordered_map<std::string, Vehicle> vehicles;
 extern std::unordered_map<std::string, Pedestrian> pedestrians;
+extern Player player;
 
 // Initializes the graphics and output window
 // By Rifdhan Nazeer
@@ -78,6 +81,8 @@ void mouseMovement(int mouseX, int mouseY);
 // Handles ending the program
 // By Rifdhan Nazeer
 void performExit();
+
+
 
 
 #endif // MAIN_H

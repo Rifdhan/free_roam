@@ -17,6 +17,7 @@ unordered_map<string, Pedestrian> pedestrians;
 Player player;
 int windowWidth, windowHeight;
 
+
 // Initializes the graphics and output window
 // By Rifdhan Nazeer
 void initializeGraphics(int argc, char **argv)
@@ -72,9 +73,20 @@ int main(int argc, char **argv)
     
     // Update Screen
     glutIdleFunc(updateScreen);
-    
+    pedestrians["Joe"].setPos(PointC(50,50));
+    pedestrians["Snake"].setPos(PointC(90,70));
+    pedestrians["Clark"].setPos(PointC(190,70));
+    pedestrians["Clark"].setFollow(true);
+    pedestrians["Joe"].addCheckPoint(3);
+    pedestrians["Joe"].addCheckPoint(1);
+    pedestrians["Snake"].addCheckPoint(0);
+    pedestrians["Snake"].addCheckPoint(1);
+    pedestrians["Snake"].addCheckPoint(2);
+    pedestrians["Snake"].addCheckPoint(3);
     // Enter OpenGL event loop
     glutMainLoop();
+    
+
 }
 
 // Main screen update function (OpenGL callback)
@@ -88,9 +100,10 @@ void drawScreen()
     //usleep(500000);
     // Draw the map
     drawMap();
+    player.draw();
     drawPed();
     
-    player.draw();
+    
         
     // Swap the buffers to display the current frame on screen
     glFlush();

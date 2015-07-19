@@ -9,6 +9,10 @@
 #include "primitives.h"
 #include "graphics.h"
 #include <iostream>
+#include <vector>
+#include "main.h"
+#include "drawing_main.h"
+#include <cmath> 
 
 class Pedestrian
 {
@@ -18,7 +22,10 @@ protected:
 	std::string type;
 	double health;
 	double damage;	
-
+    std::vector<int> checkPoints;
+    unsigned currentCheckPoint;
+    bool follow;
+    
 	// Physics
 	double mass;
 	PointC position;
@@ -39,6 +46,10 @@ public:
 	void setHealth(const double& newHp);
 
 	void setDamage(const double& newDmg);
+	
+	void setFollow(bool status);
+	
+	void addCheckPoint(int id);
 
 	std::string getName();
 
@@ -46,9 +57,12 @@ public:
 
 	double getDamage();
 
+    bool isAlive();
+
+
 
 	// Physics
-
+    
 	double getMass();
 
 	PointC getVelocity();
@@ -59,8 +73,11 @@ public:
 
     void setPos(PointC newPos);
 
-	// drawing pedestrian
+	// Drawing pedestrian
 	void draw();
+	
+	// Moving pedestrian
+	void moveToPt();	
 };
 
 
