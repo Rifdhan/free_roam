@@ -179,29 +179,29 @@ void Pedestrian::moveToPt()
             else
             {
                 coord = player.getPosition();
-                coord.x += 1;
-                coord.y += 1;
+                coord.x += 2;
+                coord.y += 2;
             }
             
             if(position.x < coord.x)
             {
-                position.x += 0.1;
+                position.x += 0.025;
                
             }
             
             if(position.y < coord.y)
             {
-                position.y += 0.1;
+                position.y += 0.025;
             }
             
             if(position.x > coord.x)
             {
-                position.x -= 0.1;    
+                position.x -= 0.025;    
             }
                       
             if(position.y > coord.y)
             {
-                position.y -= 0.1;
+                position.y -= 0.025;
             }
             
             // Checkpoint reached, proceed to next checkpoint
